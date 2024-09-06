@@ -10,12 +10,19 @@ Software Engineering lazer tag project
 - Maven
 - Node.js
 
-### Backend Setup (Java/Spring Boot)
+## Instructions to Run Project
 
-1. Clone the repository.
-2. Navigate to the `backend` folder.
-3. Run the following commands to build and run the backend:
+1. Navigate to the `backend` folder.
+2. Run the following commands to build and run the backend:
    ```bash
    mvn clean install
    mvn spring-boot:run
    ```
+
+## Contributers
+
+eli-bosch -> Eli Bosch,
+greenbeast2005 -> Rylan Davidson,
+AMcQueen95 -> Aiden McQueen,
+caseonpoint -> Cason Parkinson
+CaseOnPoint -> Cason Parkinson
