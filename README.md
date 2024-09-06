@@ -2,10 +2,27 @@
 
 Software Engineering lazer tag project
 
-Instructions to Run Project
-Beats me
+## Project Setup
+
+### Requirements:
+
+- Java 21 (or higher)
+- Maven
+- Node.js
+
+## Instructions to Run Project
+
+1. Navigate to the `backend` folder.
+2. Run the following commands to build and run the backend:
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+## Contributers
 
 eli-bosch -> Eli Bosch,
 greenbeast2005 -> Rylan Davidson,
 AMcQueen95 -> Aiden McQueen,
+caseonpoint -> Cason Parkinson
 CaseOnPoint -> Cason Parkinson
