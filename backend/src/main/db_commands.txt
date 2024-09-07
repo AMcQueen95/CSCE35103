@@ -1,0 +1,15 @@
+<-- Helpful Commands for the POSTGRESQL DB -->
+
+Check Status of DB: sudo service postgresql status
+
+Check log to see if DB is running: ps aux | grep postgres
+
+Launch the PostgreSQL cli: sudo -u postgres psql
+
+Enter Photon DB: \c photon 
+
+List tables: \dt 
+
+List tables (verbose): \d players 
+
+See all in players table: SELECT * FROM players;
