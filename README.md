@@ -19,7 +19,7 @@ Software Engineering lazer tag project
    mvn spring-boot:run
    ```
 
-## Contributers
+## Contributors
 
 eli-bosch -> Eli Bosch,<br>
 greenbeast2005 -> Rylan Davidson,<br>
