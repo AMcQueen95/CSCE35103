@@ -13,3 +13,22 @@ List tables: \dt
 List tables (verbose): \d players 
 
 See all in players table: SELECT * FROM players;
+
+See Connection: \conninfo
+
+
+
+<-- How To Set-up Port Forwarding to Allow Outside Connections (from VSCode) to the DB -->
+
+Log-in as Superuser: sudo su 
+
+Modify PostgreSQL Config file: sudo nano /etc/postgresql/13/main/postgresql.conf 
+
+Change listen_addresses = 'localhost' to 
+       listen_addresses = '*'
+
+Edit pg_hba config file: sudo nano /etc/postgresql/13/main/pg_hba.conf
+
+Add line to allow conns from any IP address: host all all 0.0.0.0/0 md5
+
+Restart PostgreSQL: sudo systemctl restart postgresql
