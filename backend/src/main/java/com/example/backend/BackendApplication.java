@@ -15,5 +15,4 @@ public class BackendApplication {
 	public String testAPI() {
 		return "Hello from Spring Boot!";
 	}
-
 }
