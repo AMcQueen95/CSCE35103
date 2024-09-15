@@ -18,6 +18,9 @@ Software Engineering lazer tag project
    mvn clean install
    mvn spring-boot:run
    ```
+3. Navigate to the frontend folder
+4. Run the following:
+   npm start
 
 ## Contributers
 
