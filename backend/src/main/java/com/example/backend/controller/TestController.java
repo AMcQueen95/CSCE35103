@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @RequestMapping("/") // default method = GET
+    // Change the mapping to /api/test
+    @RequestMapping("/api/test")
     public String testAPI() {
         return "Hello from Spring Boot!";
     }
