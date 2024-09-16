@@ -22,10 +22,9 @@ Software Engineering lazer tag project
 4. Run the following:
    npm start
 
-## Contributers
+## Contributors
 
-eli-bosch -> Eli Bosch,
-greenbeast2005 -> Rylan Davidson,
-AMcQueen95 -> Aiden McQueen,
-caseonpoint -> Cason Parkinson
+eli-bosch -> Eli Bosch,<br>
+greenbeast2005 -> Rylan Davidson,<br>
+AMcQueen95 -> Aiden McQueen,<br>
 CaseOnPoint -> Cason Parkinson

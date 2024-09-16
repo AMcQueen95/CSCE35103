@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.PlayerEntryInput {
+    position: absolute;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.PlayerSlot {
+    display: flex;
+    flex-direction: row;
+}
+
+.PlayerID, .PlayerName {
+    margin: 1px;
+    background-color: #ffffff99;
+    border: 2px solid black;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.PlayerID {
+    width: 200px;
+    /* height: 10px; */
+}
+
+.PlayerName {
+    width: 300px;
+}
+
+.Team {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    justify-content: center;
+    border-radius: 6px;
+    box-shadow: 2px 2px 7px 0px black;
+    /* text-align: center; */
+}
+
+.Team > button {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 4px;
+    margin: 4px 0;
+    box-shadow: 2px 2px 4px 0px black;
+    border-radius: 4px;
+}
+
+.Team > p {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.Red.Team {
+    background-color: red;
+}
+
+.Green.Team {
+    background-color: green;
+}
+
+.EntrySlots {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.EntryPopupBox {
+    width: 500px;
+    height: 200px;
+    background: pink;
+    border-radius: 5px;
+    
+}
