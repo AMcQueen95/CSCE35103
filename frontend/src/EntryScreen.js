@@ -19,9 +19,8 @@ function PlayerEntryPopup({togglePopup, addPlayer, playerTeam}) {
         setInputValue(event.target.value);
     };
 
-    //This is the function where appropriate data would go to send data back to the database.
-    function sendDataBackToDatabase() {
-        console.log("Sending data back to database")
+    function handleSubmit() {
+        console.log("Submitting player.")
         addPlayer(inputValue, playerTeam);
         togglePopup();
     }
@@ -31,7 +30,7 @@ function PlayerEntryPopup({togglePopup, addPlayer, playerTeam}) {
             <label>
                 Player Name: <input value={inputValue} onChange={handleInputChange} className="PlayerNameInput" />
             </label>
-            <button onClick={sendDataBackToDatabase}>Submit Player</button>
+            <button onClick={handleSubmit}>Submit Player</button>
         </div>
     );
 }
@@ -45,7 +44,7 @@ function EntryScreen() {
     const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
     const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
     
-
+    // This is the spot where the database connection will go.
     const addPlayer = (playerName, playerTeam) => {
         // State change will cause component re-render
         setPlayers(prevPlayers => {
@@ -61,6 +60,8 @@ function EntryScreen() {
             ...prevNextId,
             [playerTeam === "Red" ? "redTeam" : "greenTeam"]: prevNextId[playerTeam === "Red" ? "redTeam" : "greenTeam"] + 1
         }));
+
+        console.log("Submitting to database")
     }
     
     
