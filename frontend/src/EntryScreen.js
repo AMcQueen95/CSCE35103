@@ -43,24 +43,30 @@ function EntryScreen() {
         {playerID: null, playerName: null, playerTeam: null}
     ]);
     const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
+    const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
+    
 
     const addPlayer = (playerName, playerTeam) => {
         // State change will cause component re-render
-        setPlayers([
-            ...players,
-            { playerID: nextId.redTeam, playerName: playerName, playerTeam: playerTeam }
-        ]);
-        if(playerTeam === "Red") {
-            setNextId({redTeam: nextId.redTeam + 1});
-        }   
-        if(playerTeam === "Green") {
-            setNextId({greenTeam: nextId.greenTeam + 1});
-        }
+        setPlayers(prevPlayers => {
+            const newID = nextId[playerTeam === "Red" ? "redTeam" : "greenTeam"];
+            const updatedPlayers = [
+                ...prevPlayers,
+                { playerID: newID, playerName: playerName, playerTeam: playerTeam }
+            ];
+            return updatedPlayers;
+        });
+
+        setNextId(prevNextId => ({
+            ...prevNextId,
+            [playerTeam === "Red" ? "redTeam" : "greenTeam"]: prevNextId[playerTeam === "Red" ? "redTeam" : "greenTeam"] + 1
+        }));
     }
     
     
-    const togglePopup = () => {
-        setPopup({ isShown: !popup.isShown });
+    const togglePopup = (playerTeam) => {
+        setPopup(prevPopup => ({ isShown: !prevPopup.isShown }));
+        setCurrentPlayerTeam(playerTeam);
     };
 
     const entryClass = {name: `PlayerEntryInput ${popup.isShown ? "Shown" : ""}`};
@@ -68,7 +74,7 @@ function EntryScreen() {
     return (
         <div>
             <div id="_PlayerEntryPopup" className={entryClass.name}>
-                <PlayerEntryPopup togglePopup={togglePopup} addPlayer={addPlayer} playerTeam={"Red"}></PlayerEntryPopup>
+                <PlayerEntryPopup togglePopup={togglePopup} addPlayer={addPlayer} playerTeam={currentPlayerTeam}></PlayerEntryPopup>
             </div>
             <div className="EntrySlots">
                 <div className="Red Team">
@@ -78,31 +84,16 @@ function EntryScreen() {
                         .map((player) => (
                             <PlayerSlot key={player.playerID} playerID={player.playerID} playerName={player.playerName}/>
                     ))}
-                    <button onClick={togglePopup}>Add Player</button>
+                    <button onClick={() => togglePopup("Red")}>Add Player</button>
                 </div>
                 <div className="Green Team">
                     <p>Green Team</p>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <PlayerSlot></PlayerSlot>
-                    <button onClick={togglePopup}>Add Player</button>
+                    {players
+                        .filter(player => player.playerID != null && player.playerTeam === "Green")
+                        .map((player) => (
+                            <PlayerSlot key={player.playerID} playerID={player.playerID} playerName={player.playerName}/>
+                    ))}
+                    <button onClick={() => togglePopup("Green")}>Add Player</button>
                 </div>
             </div>
         </div>
