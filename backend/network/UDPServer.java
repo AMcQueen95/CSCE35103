@@ -47,6 +47,6 @@ public class UDPServer
     //Enconde the byte
     public static byte[] convertIntToByteArray(int code) //Just look at the name
     {
-        return ByteBuffer.allocate(4).putInt(value).array();
+        return ByteBuffer.allocate(4).putInt(code).array();
     }
 }
