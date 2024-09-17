@@ -3,17 +3,8 @@
     padding: 0;
 }
 
-.PlayerEntryInput {
-    position: absolute;
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
+
+/* Player Slot CSS */
 
 .PlayerSlot {
     display: flex;
@@ -36,6 +27,57 @@
 .PlayerName {
     width: 300px;
 }
+
+/* Player Entry CSS */
+
+.PlayerEntryInput {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.PlayerEntryInput.Shown {
+    position: absolute;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.EntryPopupBox {
+    margin-top: 150px;
+    width: 500px;
+    height: 80px;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    box-shadow: 2px 2px 2px 0px black;
+}
+
+.EntryPopupBox > button {
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: 700;
+    
+}
+
+.PlayerNameInput {
+    width: 350px;
+}
+
+/* Entry Screen CSS */
 
 .Team {
     display: flex;
@@ -75,12 +117,4 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-}
-
-.EntryPopupBox {
-    width: 500px;
-    height: 200px;
-    background: pink;
-    border-radius: 5px;
-    
 }
