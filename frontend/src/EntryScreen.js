@@ -44,9 +44,8 @@ function EntryScreen() {
     const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
     const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
     
-    // This is the spot where the database connection will go.
+    // This is the spot where the database connection will go/the actual function call where players are added.
     const addPlayer = (playerName, playerTeam) => {
-        // State change will cause component re-render
         setPlayers(prevPlayers => {
             const newID = nextId[playerTeam === "Red" ? "redTeam" : "greenTeam"];
             const updatedPlayers = [
@@ -80,6 +79,8 @@ function EntryScreen() {
             <div className="EntrySlots">
                 <div className="Red Team">
                     <p>Red Team</p>
+                    
+                    {/* Right here is where the player list gets populated, so this is probably where a backend entry point would be */}
                     {players
                         .filter(player => player.playerID != null && player.playerTeam === "Red")
                         .map((player) => (
