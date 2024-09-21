@@ -8,11 +8,12 @@ import jakarta.persistence.Id;
 @Entity
 public class Player {
 
-
+    // Properties 
+    // Id is the primary key, auto generates using IDENTITY (auto-increment)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String codeName;
+    private String codename;
     
     public Player() {
     }
@@ -26,10 +27,10 @@ public class Player {
     } 
 
     public String getCodeName() {
-        return this.codeName;
+        return this.codename;
     } 
 
-    public void setCodeName(String codeName) {
-        this.codeName = codeName;
+    public void setCodeName(String codename) {
+        this.codename = codename;
     }
 }
