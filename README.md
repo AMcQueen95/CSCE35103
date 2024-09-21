@@ -12,6 +12,13 @@ Software Engineering lazer tag project
 
 ## Instructions to Run Project
 
+In the frontend:
+   Run the following commands
+      sudo apt update
+      sudo apt install nodejs npm
+      npm install
+      npm start
+
 1. Navigate to the `backend` folder.
 2. Run the following commands to build and run the backend:
    ```bash
@@ -19,7 +26,7 @@ Software Engineering lazer tag project
    mvn spring-boot:run
    ```
 
-## Contributers
+## Contributors
 
 eli-bosch -> Eli Bosch,<br>
 greenbeast2005 -> Rylan Davidson,<br>
