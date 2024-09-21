@@ -17,8 +17,14 @@ See all in players table: SELECT * FROM players;
 See Connection: \conninfo
 
 
-
 <-- How To Set-up Port Forwarding to Allow Outside Connections (from VSCode) to the DB -->
+Select NAT network:
+       - Select Port Forwarding under advanced
+       - Protocol: TCP
+       - Host Port: 5432
+       - Host IP: 127.0.0.1
+       - Guest IP: leave blank
+       - Guest Port: 5432 
 
 Log-in as Superuser: sudo su 
 
@@ -26,6 +32,7 @@ Modify PostgreSQL Config file: sudo nano /etc/postgresql/13/main/postgresql.conf
 
 Change listen_addresses = 'localhost' to 
        listen_addresses = '*'
+-- DONT FORGET TO UNCOMMENT THIS LINE --
 
 Edit pg_hba config file: sudo nano /etc/postgresql/13/main/pg_hba.conf
 
