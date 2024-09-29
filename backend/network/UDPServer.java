@@ -6,28 +6,12 @@ import java.nio.ByteBuffer;
 
 public class UDPServer
 {
-	public static void main(String[] args) throws Exception
-	{
-		DatagramSocket ds = new DatagramSocket(7501); //Receive port
-		byte[] receive = new byte[4]; //Receiving a single int
-
-		DatagramPacket DpReceive = null;
+    public void receiveDatagram() 
+    {
         
-		while (true) //Constantly searches for received datagrams
-		{
-			DpReceive = new DatagramPacket(receive, receive.length); //Packet which recieves data
+    }
 
-			ds.receive(DpReceive); //Receives that data in byte buffer
-
-			//Need to include a map of int codes and methods to interact with the database
-            //Also need to figure out what is giving the codes to send and the way they are sent
-            //and how those things interact with server
-
-			receive = new byte[4]; //Refreshes the byte
-		}
-	}
-
-    public void sendDatagram(int code) throws Exception
+    public void sendDatagram(int code) 
     {
         DatagramSocket ds = new DatagramSocket(7500); //Use 7500 to send datagram
         byte[] send = convertIntToByteArray(code); //Converts the code to a byte[] to add to datagram
