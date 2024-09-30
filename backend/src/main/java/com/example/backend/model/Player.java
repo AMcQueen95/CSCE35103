@@ -1,5 +1,4 @@
 package com.example.backend.model;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,10 +18,8 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String codename;
     private String codename; // unique username value
     
-    public Player() {
     // empty constructor
     public Player() { 
     }
