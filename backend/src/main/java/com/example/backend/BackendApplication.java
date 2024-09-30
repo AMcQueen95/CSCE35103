@@ -13,8 +13,8 @@ public class BackendApplication {
 
 
 
-	// Test controller for pinging the database to confirm connection 
-	/* @RestController
+	/* // Test controller for pinging the database to confirm connection 
+	@RestController
 	class TestController {
 
 		@Autowired

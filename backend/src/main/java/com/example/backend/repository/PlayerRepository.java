@@ -18,5 +18,5 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
     // Method to confirm unqiueness of each codename, either block request or update player if duplicate is entered 
     // Jpa automatically implements this method to query the db by translating it
     // into something like "SELECT * FROM players WHERE codename = ?"
-    Optional<Player> findByCodeName(String codename);
+    Optional<Player> findByCodename(String codename);
 } 
