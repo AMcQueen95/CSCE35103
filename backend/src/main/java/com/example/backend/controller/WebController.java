@@ -22,14 +22,14 @@ public class WebController {
     @Autowired 
     private PlayerService playerService; 
 
-    @GetMapping("/players/{id}")
+    @GetMapping("/player/{id}")
     public ResponseEntity<Player> getPlayer(@PathVariable int id) {
         return playerService.getPlayerById(id)
         .map(player -> ResponseEntity.ok(player))
         .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/players")
+    @PostMapping("/player")
     public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
         Optional<Player> savedPlayerOpt = playerService.savePlayer(player); 
 

@@ -17,7 +17,7 @@ public class PlayerService {
     private PlayerRepository playerRepository; 
     
     public Optional<Player> savePlayer(Player player) {
-        if (playerRepository.findByCodeName(player.getCodeName()).isPresent()) {
+        if (playerRepository.findByCodename(player.getCodeName()).isPresent()) {
             return Optional.empty(); // Return empty if codename is not unique
         }
         Player savedPlayer = playerRepository.save(player);
