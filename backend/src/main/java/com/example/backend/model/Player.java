@@ -7,7 +7,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+<<<<<<< HEAD
 @Table(name = "player")
+=======
+@Table(name = "player") // specify table name to ensure it matches with vm table
+>>>>>>> main
 public class Player {
 
     // Properties 
@@ -16,8 +20,11 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String codename;
+    private String codename; // unique username value
     
     public Player() {
+    // empty constructor
+    public Player() { 
     }
 
     public int getId() {
