@@ -5,6 +5,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UDPServer {
     public void receiveDatagram() {
         try (DatagramSocket socket = new DatagramSocket(7500)) { // Listening on port 7500
@@ -13,9 +16,8 @@ public class UDPServer {
             while (true) {
                 DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(packet); // Receive the packet
-                
-                int playerId = convertByteArrayToInt(receiveBuffer);
-                System.out.println("Received player ID: " + playerId); // Handle the received ID
+                int data = this.convertByteArrayToInt(receiveBuffer);
+                System.out.println("New Player ID: " + data);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,12 +36,12 @@ public class UDPServer {
     }
 
     // Decode the byte array to an int
-    public static int convertByteArrayToInt(byte[] bytes) {
+    private  int convertByteArrayToInt(byte[] bytes) {
         return ByteBuffer.wrap(bytes).getInt();
     }
 
     // Encode the int to a byte array
-    public static byte[] convertIntToByteArray(int code) {
+    private byte[] convertIntToByteArray(int code) {
         return ByteBuffer.allocate(4).putInt(code).array();
     }
 }
