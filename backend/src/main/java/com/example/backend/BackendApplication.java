@@ -3,11 +3,22 @@ package com.example.backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.backend.udp.UDPServer;
+
+
 @SpringBootApplication
 public class BackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
+
+		UDPServer server = new UDPServer();
+
+        // Start the server in a new thread to receive datagrams
+        new Thread(() -> server.receiveDatagram()).start();
+
+        // Example: Send a datagram (this can be done elsewhere in your application)
+        server.sendDatagram("localhost", 7500, 12345); // Send example player ID
 	}
 
 
