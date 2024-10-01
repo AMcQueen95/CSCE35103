@@ -19,7 +19,7 @@ public class PlayerService {
     private UDPServer server = new UDPServer();
     
     public Optional<Player> savePlayer(Player player) {
-        if (playerRepository.findByCodename(player.getCodeName()).isPresent()) {
+        if (playerRepository.findByCodename(player.getCodename()).isPresent()) {
             return Optional.empty(); // Return empty if codename is not unique
         }
 
@@ -32,5 +32,9 @@ public class PlayerService {
 
     public Optional<Player> getPlayerById(int id) {
         return playerRepository.findById(id);
+    }
+
+    public void clearAllPlayers() {
+        playerRepository.deleteAll(); // Clear all players from the db
     }
 }
