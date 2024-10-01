@@ -46,6 +46,17 @@ function EntryScreen() {
     const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
     
     // This is the spot where the database connection will go/the actual function call where players are added.
+    //Rylans Old stuff from first iteration
+//     const addPlayer = (playerName, playerTeam) => {
+//         setPlayers(prevPlayers => {
+//             const newID = nextId[playerTeam === "Red" ? "redTeam" : "greenTeam"];
+//             const updatedPlayers = [
+//                 ...prevPlayers,
+//                 { playerID: newID, playerName: playerName, playerTeam: playerTeam }
+//             ];
+//             return updatedPlayers;
+//         });
+    //Rylans old front end code
     const addPlayer = async (playerName, playerTeam) => {
         // ID between 0-14 for both teams, shown client-side 
         const frontendID = nextId[playerTeam === 'Red' ? 'redTeam' : 'greenTeam']
