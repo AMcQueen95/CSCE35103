@@ -49,29 +49,33 @@ function EntryScreen() {
     const addPlayer = async (playerName, playerTeam) => {
         // ID between 0-14 for both teams, shown client-side 
         const frontendID = nextId[playerTeam === 'Red' ? 'redTeam' : 'greenTeam']
+        console.log('Frontend ID:', frontendID); // Check what the ID is
+
 
         // for backend (to ensure unique IDs), red team IDs will be range 0 - 14 while 
         // green team IDs will be range 15 - 29
         // note: 1-indexed
-        const backendID = nextId[playerTeam === 'Red' ? frontendID + 1 : frontendID + 16]
+        const backendID = playerTeam === 'Red' ? frontendID + 1 : frontendID + 15; 
+
+        console.log('Backend ID:', backendID); // Check what the ID is
+
 
         const savedPlayer = await addPlayerToDatabase(backendID, playerName) // return null (for now) if duplicate name
 
         if (savedPlayer) {
             setPlayers((prevPlayers) => {
-              const updatedPlayers = [
+                const updatedPlayers = [
                 ...prevPlayers,
                 { playerID: frontendID, playerName: playerName, playerTeam: playerTeam }
-              ];
-              return updatedPlayers; // <-- Return the updated player list
-            });
-        
-
-            setNextId(prevNextId => ({
-                ...prevNextId,
-                [playerTeam === "Red" ? "redTeam" : "greenTeam"]: prevNextId[playerTeam === "Red" ? "redTeam" : "greenTeam"] + 1
-            }));
+                ];
+                return updatedPlayers; // <-- Return the updated player list
+        });
         }
+
+        setNextId(prevNextId => ({
+            ...prevNextId,
+            [playerTeam === "Red" ? "redTeam" : "greenTeam"]: prevNextId[playerTeam === "Red" ? "redTeam" : "greenTeam"] + 1
+        }));
     }
     
     
