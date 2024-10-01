@@ -4,7 +4,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class UDPServer {
     public void receiveDatagram() {
         try (DatagramSocket socket = new DatagramSocket(7500)) { // Listening on port 7500

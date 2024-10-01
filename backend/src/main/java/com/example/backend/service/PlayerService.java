@@ -21,10 +21,15 @@ public class PlayerService {
             return Optional.empty(); // Return empty if codename is not unique
         }
         Player savedPlayer = playerRepository.save(player);
+        System.out.println("Player ID transmitted by UDP: 2");
         return Optional.of(savedPlayer); // Return the saved player
     }
 
     public Optional<Player> getPlayerById(int id) {
         return playerRepository.findById(id);
+    }
+
+    public void clearAllPlayers() {
+        playerRepository.deleteAll(); // Clear all players from the repository
     }
 }
