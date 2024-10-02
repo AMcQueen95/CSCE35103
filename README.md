@@ -17,6 +17,7 @@ Software Engineering lazer tag project
    ```bash
    sudo apt update
    sudo apt install nodejs npm
+   npm install react react-dom
    npm install
    npm start
    ```

@@ -1,19 +1,19 @@
 package com.example.backend.model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
-@Table(name = "player") // specify table name to ensure it matches with vm table
+@Table(name = "players") // specify table name to ensure it matches with vm table
 public class Player {
 
     // Properties 
-    // Id is the primary key, auto generates using IDENTITY (auto-increment)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "codename", unique = true)
     private String codename; // unique username value
     
     // empty constructor
@@ -28,11 +28,11 @@ public class Player {
         this.id = id;
     } 
 
-    public String getCodeName() {
+    public String getCodename() {
         return this.codename;
     } 
 
-    public void setCodeName(String codename) {
+    public void setCodename(String codename) {
         this.codename = codename;
     }
 }

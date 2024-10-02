@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.Player;
 import com.example.backend.service.PlayerService;
+import com.example.backend.udp.UDPService;
+
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +23,9 @@ public class WebController {
 
     @Autowired 
     private PlayerService playerService; 
+
+    @Autowired
+    private UDPService udpService;
 
     @GetMapping("/player/{id}")
     public ResponseEntity<Player> getPlayer(@PathVariable int id) {
@@ -30,15 +35,32 @@ public class WebController {
     }
 
     @PostMapping("/player")
-    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
-        Optional<Player> savedPlayerOpt = playerService.savePlayer(player); 
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
+        if (player.getCodename() == null || player.getCodename().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Handle bad requests
+        }
 
-        if (savedPlayerOpt.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedPlayerOpt.get()); // 201 Created 
+        System.out.println("ID: " + player.getId());
+        System.out.println("Codename: " + player.getCodename());
+
+        // Save the player and generate the ID
+        Optional<Player> savedPlayer = playerService.savePlayer(player);
+
+        // Check if the player was saved successfully
+        if (savedPlayer.isPresent()) {
+            Player playerToReturn = savedPlayer.get();
+            
+            // Send UDP packet with player ID and codename
+            udpService.sendDatagram("localhost", 7501, playerToReturn.getId()); 
+
+            return ResponseEntity.ok(playerToReturn); // Return the saved player with ID
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409 Conflict, for duplicate codename
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // Handle codename conflict or other errors
         }
     }
+
+    /* // Method to send UDP packet
+    private void sendUDPPacket(int playerId, String codename) {
+        System.out.println("UDP packet sent with Player ID: " + playerId + ", Codename: " + codename);
+    } */
 }
-
-

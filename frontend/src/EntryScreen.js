@@ -135,20 +135,18 @@ function EntryScreen() {
     //Rylans old front end code
 
     const addPlayer = async (playerID, playerName, equipmentID) => {
-        // ID between 0-14 for both teams, shown client-side 
         // const frontendID = nextId[playerTeam === 'Red' ? 'redTeam' : 'greenTeam']
 
         // // for backend (to ensure unique IDs), red team IDs will be range 0 - 14 while 
         // // green team IDs will be range 15 - 29
         // // note: 1-indexed
         // const backendID = nextId[playerTeam === 'Red' ? frontendID + 1 : frontendID + 16]
-
         // const savedPlayer = await addPlayerToDatabase(backendID, playerName) // return null (for now) if duplicate name
 
         // if (savedPlayer) {
             console.log("New player added: \nEquipmentID: " + equipmentID + "\nPlayerID: " + playerID + "\nPlayerName: " + playerName + "\nPlayerTeam: " + currentPlayerTeam);
             setPlayers((prevPlayers) => {
-              const updatedPlayers = [
+                const updatedPlayers = [
                 ...prevPlayers,
                 {equipmentID: equipmentID, playerID: playerID, playerName: playerName, playerTeam: currentPlayerTeam }
               ];
