@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { addPlayerToDatabase } from './api';
 
 // This is the individual player slot (includes player name and id)
-function PlayerSlot({playerID, playerName}) {
+function PlayerSlot({equipmentID, playerID, playerName}) {
     return (
         <div className="PlayerSlot">
+            <p className="EquipmentID">{equipmentID}</p>
             <p className="PlayerID">{playerID}</p>
             <p className="PlayerName">{playerName}</p>
         </div>
@@ -74,6 +75,8 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
             setPlayerName('');
             setEquipmentID(0);
             
+            addPlayer(playerID, playerName, equipmentID);
+
             togglePopup();
         }
         //togglePopup();
@@ -115,7 +118,7 @@ function EntryScreen() {
     const [players, setPlayers] = useState([
         {equipmentID: null, playerID: null, playerName: null, playerTeam: null}
     ]);
-    const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
+    // const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
     const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
     
     // This is the spot where the database connection will go/the actual function call where players are added.
@@ -130,32 +133,28 @@ function EntryScreen() {
 //             return updatedPlayers;
 //         });
     //Rylans old front end code
-    const addPlayer = async (playerName, playerTeam) => {
+
+    const addPlayer = async (playerID, playerName, equipmentID) => {
         // ID between 0-14 for both teams, shown client-side 
-        const frontendID = nextId[playerTeam === 'Red' ? 'redTeam' : 'greenTeam']
+        // const frontendID = nextId[playerTeam === 'Red' ? 'redTeam' : 'greenTeam']
 
-        // for backend (to ensure unique IDs), red team IDs will be range 0 - 14 while 
-        // green team IDs will be range 15 - 29
-        // note: 1-indexed
-        const backendID = nextId[playerTeam === 'Red' ? frontendID + 1 : frontendID + 16]
+        // // for backend (to ensure unique IDs), red team IDs will be range 0 - 14 while 
+        // // green team IDs will be range 15 - 29
+        // // note: 1-indexed
+        // const backendID = nextId[playerTeam === 'Red' ? frontendID + 1 : frontendID + 16]
 
-        const savedPlayer = await addPlayerToDatabase(backendID, playerName) // return null (for now) if duplicate name
+        // const savedPlayer = await addPlayerToDatabase(backendID, playerName) // return null (for now) if duplicate name
 
-        if (savedPlayer) {
+        // if (savedPlayer) {
+            console.log("New player added: \nEquipmentID: " + equipmentID + "\nPlayerID: " + playerID + "\nPlayerName: " + playerName + "\nPlayerTeam: " + currentPlayerTeam);
             setPlayers((prevPlayers) => {
               const updatedPlayers = [
                 ...prevPlayers,
-                { playerID: frontendID, playerName: playerName, playerTeam: playerTeam }
+                {equipmentID: equipmentID, playerID: playerID, playerName: playerName, playerTeam: currentPlayerTeam }
               ];
               return updatedPlayers; // <-- Return the updated player list
             });
-        
-
-            setNextId(prevNextId => ({
-                ...prevNextId,
-                [playerTeam === "Red" ? "redTeam" : "greenTeam"]: prevNextId[playerTeam === "Red" ? "redTeam" : "greenTeam"] + 1
-            }));
-        }
+        // }
     }
     
     
@@ -174,21 +173,30 @@ function EntryScreen() {
             <div className="EntrySlots">
                 <div className="Red Team">
                     <p>Red Team</p>
-                    
+                    <div className="Header">
+                        <p className="EquipmentID">Equipment ID</p>
+                        <p className="PlayerID">Player ID</p>
+                        <p className="PlayerName">Player Name</p>
+                    </div>
                     {/* Right here is where the player list gets populated, so this is probably where a backend entry point would be */}
                     {players
                         .filter(player => player.playerID != null && player.playerTeam === "Red")
                         .map((player) => (
-                            <PlayerSlot key={player.playerID} playerID={player.playerID} playerName={player.playerName}/>
+                            <PlayerSlot key={player.playerID} equipmentID={player.equipmentID} playerID={player.playerID} playerName={player.playerName}/>
                     ))}
                     <button onClick={() => togglePopup("Red")}>Add Player</button>
                 </div>
                 <div className="Green Team">
                     <p>Green Team</p>
+                    <div className="Header">
+                        <p className="EquipmentID">Equipment ID</p>
+                        <p className="PlayerID">Player ID</p>
+                        <p className="PlayerName">Player Name</p>
+                    </div>
                     {players
                         .filter(player => player.playerID != null && player.playerTeam === "Green")
                         .map((player) => (
-                            <PlayerSlot key={player.playerID} playerID={player.playerID} playerName={player.playerName}/>
+                            <PlayerSlot key={player.playerID} equipmentID={player.equipmentID} playerID={player.playerID} playerName={player.playerName}/>
                     ))}
                     <button onClick={() => togglePopup("Green")}>Add Player</button>
                 </div>

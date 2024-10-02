@@ -6,26 +6,31 @@
 
 /* Player Slot CSS */
 
-.PlayerSlot {
+.PlayerSlot, .Header {
     display: flex;
     flex-direction: row;
 }
 
-.PlayerID, .PlayerName {
+.PlayerID, .PlayerName, .EquipmentID {
     margin: 1px;
     background-color: #ffffff99;
     border: 2px solid black;
     padding: 2px;
     border-radius: 4px;
+    text-align: center;
+}
+
+.EquipmentID {
+    width: 100px;
 }
 
 .PlayerID {
-    width: 200px;
-    /* height: 10px; */
+    width: 100px;
 }
 
 .PlayerName {
     width: 300px;
+    text-align: left;
 }
 
 /* Player Entry Popup CSS */
