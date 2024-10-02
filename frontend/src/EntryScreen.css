@@ -28,7 +28,7 @@
     width: 300px;
 }
 
-/* Player Entry CSS */
+/* Player Entry Popup CSS */
 
 .PlayerEntryInput {
     position: absolute;
@@ -52,8 +52,8 @@
 
 .EntryPopupBox {
     margin-top: 150px;
-    width: 500px;
-    height: 80px;
+    width: 400px;
+    height: 120px;
     background: white;
     border-radius: 5px;
     display: flex;
@@ -73,7 +73,55 @@
     
 }
 
+.PlayerIDInput {
+    position: absolute;
+    /* content: ''; */
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.PlayerIDInput.state0 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+}
+
 .PlayerNameInput {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.PlayerNameInput.state1 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+    
+.EquipmentIDInput {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.EquipmentIDInput.state2 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.EntryPopupBox > input {
     width: 350px;
 }
 

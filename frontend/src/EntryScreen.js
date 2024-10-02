@@ -13,24 +13,97 @@ function PlayerSlot({playerID, playerName}) {
     );
 }
 
-function PlayerEntryPopup({togglePopup, addPlayer, playerTeam}) {
-    const [inputValue, setInputValue] = useState('');
+// This is the first Player Popup, it prompts you for player ID and then checks the database for that ID
+// If the ID cannot be found another popup will appear asking for new player name, but if player ID is found
+// the equipment ID popup will appear.
+function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
+    const [popupState, setPopupState] = useState(0);
+    const [playerID, setPlayerID] = useState(0);
+    const [playerName, setPlayerName] = useState('');
+    const [equipmentID, setEquipmentID] = useState(0);
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+    const handlePlayerIDChange = (event) => {
+        setPlayerID(event.target.value);
     };
+    const handlePlayerNameChange = (event) => {
+        setPlayerName(event.target.value);
+    };
+    const handleEquipmentIDChange = (event) => {
+        setEquipmentID(event.target.value);
+    }
+
+    // const popupStateClassName = {
+        
+        
+    //     name:
+    // };
 
     function handleSubmit() {
-        console.log("Submitting player.")
-        addPlayer(inputValue, playerTeam);
-        togglePopup();
+        
+        //addPlayer(inputValue, playerTeam);
+        
+        //Right here we do a check on the database, for debugging right now, it just returns true so that I can see next screen popup
+        //If the player is not in the database, we enter this statement
+        
+        //Things Ill need, first a function that can return true of false if player name is in the database
+        //second ill need a function that can take a playerID and return a name.
+        //third a function that takes a playerID and a playerName to add to the database.
+        if(popupState === 0 && true)
+        {
+            console.log("Checking database for " + playerID);
+            setPopupState(1);
+        }else if(popupState === 0) 
+        {
+            console.log(playerID + " found with player name ");
+            setPopupState(2);
+        }
+
+        if(popupState === 1 && true)
+        {
+            console.log("Adding " + playerName + " to database with ID " + playerID);
+            setPopupState(2);
+        }
+        
+        if(popupState === 2 && true)
+        {
+            // Here we now call the new addplayer script with appropriate information
+            //
+            
+            setPopupState(0);
+            setPlayerID(0);
+            setPlayerName('');
+            setEquipmentID(0);
+            
+            togglePopup();
+        }
+        //togglePopup();
     }
     
     return (
         <div className="EntryPopupBox">
-            <label>
-                Player Name: <input value={inputValue} onChange={handleInputChange} className="PlayerNameInput" />
-            </label>
+            {/* This is state = 0, this is the part that requests your ID*/}
+            <div className={"PlayerIDInput state" + popupState}>
+                <label>
+                    Player ID: <input value={playerID} onChange={handlePlayerIDChange} type="number" />
+                </label>
+            </div>
+            
+            {/* This is state = 1, this is the part that if your ID is not in the database, it will request a player name for your new player */}
+            <div className={"PlayerNameInput state" + popupState}>
+                <p>Player ID: {playerID}</p>
+                <label>
+                    Player Name: <input value={playerName} onChange={handlePlayerNameChange} type="text" />
+                </label>
+            </div>
+
+            {/* This is state = 2, this is the final state of the popup, It displays the player name and ID and requests your equipment ID */}
+            <div className={"EquipmentIDInput state" + popupState}>
+                <p>Player ID: {playerID}</p>
+                <p>Player Name: {playerName}</p>
+                <label>
+                    Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
+                </label>
+            </div>
             <button onClick={handleSubmit}>Submit Player</button>
         </div>
     );
@@ -40,7 +113,7 @@ function PlayerEntryPopup({togglePopup, addPlayer, playerTeam}) {
 function EntryScreen() {
     const [popup, setPopup] = useState({ isShown: false });
     const [players, setPlayers] = useState([
-        {playerID: null, playerName: null, playerTeam: null}
+        {equipmentID: null, playerID: null, playerName: null, playerTeam: null}
     ]);
     const [nextId, setNextId] = useState({redTeam: 0, greenTeam: 0});
     const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
@@ -96,7 +169,7 @@ function EntryScreen() {
     return (
         <div>
             <div id="_PlayerEntryPopup" className={entryClass.name}>
-                <PlayerEntryPopup togglePopup={togglePopup} addPlayer={addPlayer} playerTeam={currentPlayerTeam}></PlayerEntryPopup>
+                <PlayerIDPopup togglePopup={togglePopup} addPlayer={addPlayer} playerTeam={currentPlayerTeam}></PlayerIDPopup>
             </div>
             <div className="EntrySlots">
                 <div className="Red Team">
