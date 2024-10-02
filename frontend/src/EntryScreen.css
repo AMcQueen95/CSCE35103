@@ -6,29 +6,34 @@
 
 /* Player Slot CSS */
 
-.PlayerSlot {
+.PlayerSlot, .Header {
     display: flex;
     flex-direction: row;
 }
 
-.PlayerID, .PlayerName {
+.PlayerID, .PlayerName, .EquipmentID {
     margin: 1px;
     background-color: #ffffff99;
     border: 2px solid black;
     padding: 2px;
     border-radius: 4px;
+    text-align: center;
+}
+
+.EquipmentID {
+    width: 100px;
 }
 
 .PlayerID {
-    width: 200px;
-    /* height: 10px; */
+    width: 100px;
 }
 
 .PlayerName {
     width: 300px;
+    text-align: left;
 }
 
-/* Player Entry CSS */
+/* Player Entry Popup CSS */
 
 .PlayerEntryInput {
     position: absolute;
@@ -52,8 +57,8 @@
 
 .EntryPopupBox {
     margin-top: 150px;
-    width: 500px;
-    height: 80px;
+    width: 400px;
+    height: 120px;
     background: white;
     border-radius: 5px;
     display: flex;
@@ -73,7 +78,55 @@
     
 }
 
+.PlayerIDInput {
+    position: absolute;
+    /* content: ''; */
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.PlayerIDInput.state0 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+}
+
 .PlayerNameInput {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.PlayerNameInput.state1 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+    
+.EquipmentIDInput {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.EquipmentIDInput.state2 {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.EntryPopupBox > input {
     width: 350px;
 }
 
