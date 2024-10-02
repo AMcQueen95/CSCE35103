@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.model.Player;
 import com.example.backend.repository.PlayerRepository; 
-import com.example.backend.udp.UDPServer;
+import com.example.backend.udp.UDPService;
 
 @Service 
 public class PlayerService {
@@ -16,7 +16,7 @@ public class PlayerService {
     private PlayerRepository playerRepository; 
 
     @Autowired
-    private UDPServer server = new UDPServer();
+    private UDPService server = new UDPService();
     
     public Optional<Player> savePlayer(Player player) {
         if (playerRepository.findByCodename(player.getCodename()).isPresent()) {
