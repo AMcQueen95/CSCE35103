@@ -28,7 +28,7 @@ public class WebController {
     private UDPService udpService;
 
     @GetMapping("/player/bool/{id}")
-    public ResponseEntity<Boolean> checkIfPlayerExists(@PathVariable int id) {
+    public ResponseEntity<Boolean> playerDoesNotExist(@PathVariable int id) {
         System.out.println("Checking if player with ID " + id + " exists in the database...");
         boolean playerExists = playerService.getPlayerById(id).isPresent();
 
@@ -58,7 +58,7 @@ public class WebController {
         }
     }
 
-    @PostMapping("/player")
+    @PostMapping("/addPlayer")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         if (player.getCodename() == null || player.getCodename().isEmpty()) {
             return ResponseEntity.badRequest().body(null); // Handle bad requests
