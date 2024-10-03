@@ -2,6 +2,7 @@ import './EntryScreen.css';
 import React from 'react';
 import { useState } from 'react';
 import { addPlayerToDatabase } from './api';
+import { playerDoesNotExist } from './api';
 
 // This is the individual player slot (includes player name and id)
 function PlayerSlot({equipmentID, playerID, playerName}) {
@@ -46,10 +47,8 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
         //Right here we do a check on the database, for debugging right now, it just returns true so that I can see next screen popup
         //If the player is not in the database, we enter this statement
         
-        //Things Ill need, first a function that can return true of false if player name is in the database
-        //second ill need a function that can take a playerID and return a name.
         //third a function that takes a playerID and a playerName to add to the database.
-        if(popupState === 0 && true)
+        if(popupState === 0 && playerDoesNotExist(playerID))
         {
             console.log("Checking database for " + playerID);
             setPopupState(1);

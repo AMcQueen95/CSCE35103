@@ -13,8 +13,10 @@ public class Player {
     @Id
     private int id;
 
-    @Column(name = "codename", unique = true)
+    @Column(name = "codename")
     private String codename; // unique username value
+
+    private int equipmentId;
     
     // empty constructor
     public Player() { 
@@ -27,6 +29,14 @@ public class Player {
     public void setId(int id) {
         this.id = id;
     } 
+
+    public int getEquipmentId() {
+        return this.equipmentId;
+    }
+
+    public void setEquipmentId(int equipmentId) {
+        this.equipmentId = equipmentId;
+    }
 
     public String getCodename() {
         return this.codename;
