@@ -57,6 +57,18 @@ public class WebController {
         }
     }
 
+    @PostMapping("/sendEquipmentID")
+    public ResponseEntity<Void> sendEquipmentID(@RequestBody int equipmentId) {
+        try {
+            udpService.sendDatagram("localhost", 7500, equipmentId);
+            return ResponseEntity.ok().build(); // Return HTTP 200 OK
+        } catch (Exception e) {
+            // Log the exception if necessary
+            System.err.println("Error sending equipment ID: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return HTTP 500 if an error occurs
+        }
+    }
+
     @PostMapping("/addPlayer")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         if (player.getCodename() == null || player.getCodename().isEmpty()) {
@@ -72,9 +84,6 @@ public class WebController {
         // Check if the player was saved successfully
         if (savedPlayer.isPresent()) {
             Player playerToReturn = savedPlayer.get();
-            
-            // Send UDP packet with player ID and codename
-            udpService.sendDatagram("localhost", 7501, playerToReturn.getId()); 
 
             return ResponseEntity.ok(playerToReturn); // Return the saved player with ID
         } else {

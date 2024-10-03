@@ -1,5 +1,27 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
 
+export const sendEquipmentID = async (equipmentID) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/sendEquipmentID`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                equipmentID: equipmentID, 
+            }), 
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send equipment ID');
+        }
+
+        console.log("Sent " + equipmentID + " to the backend"); // Return added player & success code
+    } catch (error) {
+        console.error('Error sending equipmentID to backend: ', error);  
+    }
+}
+
 export const addPlayerToDatabase = async (playerID, playerCodeName) => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/addPlayer`, {
