@@ -47,14 +47,13 @@ public class WebController {
         System.out.println("Checking if player with ID " + id + " exists in the database...");
         Optional<Player> playerOpt = playerService.getPlayerById(id);
 
-        // Check if player exists and retrieve codename
         if (playerOpt.isPresent()) {
+            System.out.println("Player found in database");
             Player player = playerOpt.get();
-            System.out.println("Player with ID " + id + " exists in the database! Codename: " + player.getCodename());
-            return ResponseEntity.ok(player.getCodename()); // Return codename if exists
-        }   else {
-            System.out.println("Player with ID " + id + " does not exist in the database!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found"); // Handle not found case
+            return ResponseEntity.ok(player.getCodename());
+        } else {
+            System.out.println("Player not found in database");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found");
         }
     }
 
