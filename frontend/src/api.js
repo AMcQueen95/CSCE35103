@@ -12,11 +12,15 @@ export const addPlayerToDatabase = async (playerID, playerCodeName) => {
                 id: playerID,}), 
         });
 
+        console.log('Status Code:', response.status); // Log status code
+
         if (!response.ok) {
             throw new Error('Failed to add player');
         }
 
-        return await response.json(); // Return added player & success code
+        const codename = await response.json();
+        console.log('Player Codename:', codename); // Log player codename
+        return codename;
     } catch (error) {
         console.error('Error adding player: ', error);  
         return null;
