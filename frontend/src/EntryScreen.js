@@ -56,6 +56,8 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
                 setPopupState(1);
             } else {
                 const returnedPlayer = await getPlayerByID(playerID);
+
+                console.log(returnedPlayer);
                 
                 setPlayerName(returnedPlayer); // Await this if it's also an async function
                 console.log(playerID + " found with player name " + playerName);
