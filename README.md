@@ -22,10 +22,10 @@ Software Engineering lazer tag project
    source ~/.bashrc
    java --version
    ```
-3. Navigate to the `bin` folder inside the 'apache-maven-3.9.9' folder inside 'backend' folder.
+3. Navigate to `backend` in the `CSCE35103-main` folder.
 4. Run the following commands to build and run the backend:
    ```bash
-
+   cd apache-maven-3.9.9/bin
    chmod +x mvn
    ./mvn -f ../../pom.xml clean install
    ./mvn -f ../../pom.xml spring-boot:run
