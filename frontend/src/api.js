@@ -39,7 +39,7 @@ export const getPlayerByID = async (playerID) => {
             throw new Error("Failed to receive player codename");
         }
 
-        const codename = await response.json();
+        const codename = await response.text();
         console.log('Player Codename:', codename); // Log player codename
         return codename;
     } catch (error) {
