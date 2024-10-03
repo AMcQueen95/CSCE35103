@@ -3,6 +3,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 
 @Entity
@@ -16,6 +17,7 @@ public class Player {
     @Column(name = "codename")
     private String codename; // unique username value
 
+    @Transient // This field will not be persisted in the database
     private int equipmentId;
     
     // empty constructor
