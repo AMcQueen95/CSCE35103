@@ -58,9 +58,9 @@ public class WebController {
     }
 
     @PostMapping("/sendEquipmentID")
-    public ResponseEntity<Void> sendEquipmentID(@RequestBody int equipmentId) {
+    public ResponseEntity<Void> sendEquipmentID(@RequestBody Player player) {
         try {
-            udpService.sendDatagram("localhost", 7500, equipmentId);
+            udpService.sendDatagram("localhost", 7500, player.getEquipmentId());
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
         } catch (Exception e) {
             // Log the exception if necessary
