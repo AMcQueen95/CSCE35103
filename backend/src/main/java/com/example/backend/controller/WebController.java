@@ -28,10 +28,9 @@ public class WebController {
     private UDPService udpService;
 
     @GetMapping("/player/{id}")
-    public ResponseEntity<Player> getPlayer(@PathVariable int id) {
-        return playerService.getPlayerById(id)
-        .map(player -> ResponseEntity.ok(player))
-        .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Boolean> checkIfPlayerExists(@PathVariable int id) {
+        boolean playerExists = playerService.getPlayerById(id).isPresent();
+        return ResponseEntity.ok(!playerExists); // true if not in DB, false if exists
     }
 
     @PostMapping("/player")
