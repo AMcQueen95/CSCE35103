@@ -1,7 +1,7 @@
 import './EntryScreen.css';
 import React from 'react';
 import { useState } from 'react';
-import { addPlayerToDatabase, getPlayerByID } from './api';
+import { addPlayerToDatabase, getPlayerByID, sendEquipmentID } from './api';
 import { playerDoesNotExist } from './api';
 
 // This is the individual player slot (includes player name and id)
@@ -152,6 +152,8 @@ function EntryScreen() {
 
         // if (savedPlayer) {
             console.log("New player added: \nEquipmentID: " + equipmentID + "\nPlayerID: " + playerID + "\nPlayerName: " + playerName + "\nPlayerTeam: " + currentPlayerTeam);
+            
+            sendEquipmentID(equipmentID);
             setPlayers((prevPlayers) => {
                 const updatedPlayers = [
                 ...prevPlayers,

@@ -19,7 +19,7 @@ public class UDPService {
 
     public void start() {
         try {
-            socket = new DatagramSocket(7500); // Listening on port 7500
+            socket = new DatagramSocket(7501); // Listening on port 7500
             // Start receiving packets in a new thread
             new Thread(this::receiveDatagram).start();
         } catch (Exception e) {
