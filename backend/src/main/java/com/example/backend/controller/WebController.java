@@ -29,7 +29,16 @@ public class WebController {
 
     @GetMapping("/player/{id}")
     public ResponseEntity<Boolean> checkIfPlayerExists(@PathVariable int id) {
+        System.out.println("Checking if player with ID " + id + " exists in the database...");
         boolean playerExists = playerService.getPlayerById(id).isPresent();
+
+        // debugging
+        if (playerExists) {
+            System.out.println("Player with ID " + id + "exists in the database!");
+        } else {
+            System.out.println("Player with ID " + id + "does not exist in the database!");
+        }
+
         return ResponseEntity.ok(!playerExists); // true if not in DB, false if exists
     }
 
