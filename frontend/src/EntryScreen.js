@@ -1,7 +1,7 @@
 import './EntryScreen.css';
 import React from 'react';
 import { useState } from 'react';
-import { addPlayerToDatabase } from './api';
+import { addPlayerToDatabase, getPlayerByID } from './api';
 import { playerDoesNotExist } from './api';
 
 // This is the individual player slot (includes player name and id)
@@ -54,18 +54,19 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
             setPopupState(1);
         }else if(popupState === 0) 
         {
-            
-            console.log(playerID + " found with player name ");
+            setPlayerName(getPlayerByID(playerID));
+            console.log(playerID + " found with player name " + playerName);
             setPopupState(2);
         }
 
-        if(popupState === 1 && true)
+        if(popupState === 1)
         {
             console.log("Adding " + playerName + " to database with ID " + playerID);
+            addPlayerToDatabase(playerID, playerName);
             setPopupState(2);
         }
         
-        if(popupState === 2 && true)
+        if(popupState === 2)
         {
             // Here we now call the new addplayer script with appropriate information
             //

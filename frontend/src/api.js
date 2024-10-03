@@ -1,6 +1,6 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
 
-export const addPlayerToDatabase = async (equipmentId, playerID, playerCodeName) => {
+export const addPlayerToDatabase = async (playerID, playerCodeName) => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/player`, {
             method: 'POST',
@@ -8,7 +8,6 @@ export const addPlayerToDatabase = async (equipmentId, playerID, playerCodeName)
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-                equipmentId: equipmentId,
                 codename: playerCodeName, 
                 id: playerID,}), 
         });
@@ -25,9 +24,30 @@ export const addPlayerToDatabase = async (equipmentId, playerID, playerCodeName)
 }
 
 
+export const getPlayerByID = async (playerID) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/player/string/${playerID}`, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to receive player codename");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error: getPlayerByID failed to reach /{id} endpoint");
+        return null;
+    }
+}
+
+
 export const playerDoesNotExist = async (playerID) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/player/${playerID}`, {
+        const response = await fetch(`${API_BASE_URL}/api/player/bool/${playerID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
