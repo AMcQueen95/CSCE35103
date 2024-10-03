@@ -55,6 +55,7 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
             setPopupState(1);
         }else if(popupState === 0) 
         {
+            
             console.log(playerID + " found with player name ");
             setPopupState(2);
         }
