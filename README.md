@@ -32,5 +32,8 @@ Software Engineering lazer tag project
 
 eli-bosch -> Eli Bosch,<br>
 greenbeast2005 -> Rylan Davidson,<br>
-AMcQueen95 -> Aiden McQueen,<br>
+AMcQueen95 -> Aidan McQueen,<br>
 CaseOnPoint -> Cason Parkinson
+
+cat jdk-21-part\* > jdk-21.0.3_linux-x64_bin.deb
+sudo dpkg -i jdk-21.0.3_linux-x64_bin.deb
