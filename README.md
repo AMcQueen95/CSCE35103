@@ -13,7 +13,7 @@ Software Engineering lazer tag project
 ## Instructions to Run Project
 
 1. Visit https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html and download Linux x64 Debian Package. Navigate to the `Download` folder.
-2. Run the following commands to install JDK-21 and change the path variables:
+2. Open terminal and run the following commands to install JDK-21 and change the path variables:
    ```bash
    sudo apt install default-jre
    sudo dpkg -i jdk-21.0.3_linux-x64_bin.deb
@@ -28,10 +28,11 @@ Software Engineering lazer tag project
    cd apache-maven-3.9.9/bin
    chmod +x mvn
    ./mvn -f ../../pom.xml clean install
-   ./mvn -f ../../pom.xml spring-boot:run
+   ./mvn -f ../../pom.xml spring-boot:run 
    ```
-5. Navigate to the `frontend` folder
-6. Run the following commands to build and run the frontend:
+5. Open new terminal while leaving the last terminal open
+6. Navigate to the `frontend` folder
+7. Run the following commands to build and run the frontend:
    ```bash
    sudo apt update
    sudo apt install nodejs npm
