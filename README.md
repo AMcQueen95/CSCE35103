@@ -32,7 +32,7 @@ Software Engineering lazer tag project
    ```
 5. Open new terminal while leaving the last terminal open
 6. Navigate to the `frontend` folder
-7. Run the following commands to build and run the frontend (First three commands only need to be run the first time project in run):
+7. Run the following commands to build and run the frontend (First three commands only need to be run the first time the project is run):
    ```bash
    sudo apt update
    sudo apt install nodejs npm
