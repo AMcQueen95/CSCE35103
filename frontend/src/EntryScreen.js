@@ -40,7 +40,7 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
     //     name:
     // };
 
-    function handleSubmit() {
+    const handleSubmit = async () => {
         
         //addPlayer(inputValue, playerTeam);
         
@@ -48,15 +48,17 @@ function PlayerIDPopup({togglePopup, addPlayer, playerTeam}) {
         //If the player is not in the database, we enter this statement
         
         //third a function that takes a playerID and a playerName to add to the database.
-        if(popupState === 0 && playerDoesNotExist(playerID))
-        {
-            console.log("Checking database for " + playerID);
-            setPopupState(1);
-        }else if(popupState === 0) 
-        {
-            setPlayerName(getPlayerByID(playerID));
-            console.log(playerID + " found with player name " + playerName);
-            setPopupState(2);
+        if(popupState === 0) {
+            const doesNotExist = await playerDoesNotExist(playerID); // Await the function
+
+            if (doesNotExist) { // If it returns true
+                console.log("Checking database for " + playerID);
+                setPopupState(1);
+            } else {
+                setPlayerName(await getPlayerByID(playerID)); // Await this if it's also an async function
+                console.log(playerID + " found with player name " + playerName);
+                setPopupState(2);
+            }
         }
 
         if(popupState === 1)
