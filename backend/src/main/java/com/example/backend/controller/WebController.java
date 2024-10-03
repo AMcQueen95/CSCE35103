@@ -48,8 +48,8 @@ public class WebController {
         Optional<Player> playerOpt = playerService.getPlayerById(id);
 
         if (playerOpt.isPresent()) {
-            System.out.println("Player found in database");
             Player player = playerOpt.get();
+            System.out.println("Player found in database with codename: " + player.getCodename());
             return ResponseEntity.ok(player.getCodename());
         } else {
             System.out.println("Player not found in database");

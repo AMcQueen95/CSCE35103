@@ -12,15 +12,11 @@ export const addPlayerToDatabase = async (playerID, playerCodeName) => {
                 id: playerID,}), 
         });
 
-        console.log('Status Code:', response.status); // Log status code
-
         if (!response.ok) {
             throw new Error('Failed to add player');
         }
 
-        const codename = await response.json();
-        console.log('Player Codename:', codename); // Log player codename
-        return codename;
+        return await response.json(); // Return added player & success code
     } catch (error) {
         console.error('Error adding player: ', error);  
         return null;
@@ -37,11 +33,15 @@ export const getPlayerByID = async (playerID) => {
             },
         });
 
+        console.log('Status Code:', response.status); // Log status code
+
         if (!response.ok) {
             throw new Error("Failed to receive player codename");
         }
 
-        return await response.json();
+        const codename = await response.json();
+        console.log('Player Codename:', codename); // Log player codename
+        return codename;
     } catch (error) {
         console.error("Error: getPlayerByID failed to reach /{id} endpoint");
         return null;
