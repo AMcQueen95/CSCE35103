@@ -32,9 +32,6 @@ export const playerDoesNotExist = async (playerID) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                playerID: playerID,
-            }),
         });
 
         if (!response.ok) {
