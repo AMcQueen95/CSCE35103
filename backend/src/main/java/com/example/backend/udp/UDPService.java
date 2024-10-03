@@ -33,18 +33,18 @@ public class UDPService {
     }
 
     // Send a datagram with the player ID to a specific host and port
-    public void sendDatagram(String host, int port, int playerId) {
+    public void sendDatagram(String host, int port, int equipmentId) {
         if (socket == null) {
             System.err.println("Socket is not initialized. Cannot send datagram.");
             return;
         }
         
         try {
-            byte[] sendBuffer = convertIntToByteArray(playerId);
+            byte[] sendBuffer = convertIntToByteArray(equipmentId);
             InetAddress address = InetAddress.getByName(host);
             DatagramPacket packet = new DatagramPacket(sendBuffer, sendBuffer.length, address, port);
             socket.send(packet); // Send the datagram
-            System.out.println("UDP packet sent with Player ID: " + playerId + " to " + host + ":" + port);
+            System.out.println("UDP packet sent with Equipment ID: " + equipmentId + " to " + host + ":" + port);
         } catch (Exception e) {
             e.printStackTrace(); // Handle exceptions appropriately
         }
