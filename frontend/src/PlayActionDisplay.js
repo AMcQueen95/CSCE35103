@@ -1,16 +1,16 @@
-// PlayActionDisplay.js
 import React, { useState, useEffect } from 'react';
-import './PlayActionDisplay.css'; // Import CSS for styling
+import './PlayActionDisplay.css';
 
 function PlayActionDisplay({ players, backToEntryScreen }) {
-  const [countdown, setCountdown] = useState(10); // 10-second countdown
+  //10 second countdown
+  const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prevCountdown) => {
         if (prevCountdown <= 1) {
           clearInterval(timer);
-          // Start the game logic here
+          //future game logic starts here
           return 0;
         }
         return prevCountdown - 1;
@@ -19,16 +19,16 @@ function PlayActionDisplay({ players, backToEntryScreen }) {
 
     return () => clearInterval(timer);
   }, []);
-
+  //team names
   const redTeamPlayers = players.filter((player) => player.playerTeam === 'Red');
   const greenTeamPlayers = players.filter((player) => player.playerTeam === 'Green');
 
   return (
     <div className="play-action-container">
       <div className="retro-tv-screen">
-        <div className="crt-overlay"></div> {/* CRT screen effect */}
+        <div className="crt-overlay"></div>
         <div className="team-window">
-          <h2 className="red">Red Team</h2> {/* Light red title */}
+          <h2 className="red">Red Team</h2> 
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
               <p className="equipment-id">Equipment ID: {player.equipmentID}</p>
@@ -38,7 +38,7 @@ function PlayActionDisplay({ players, backToEntryScreen }) {
           ))}
         </div>
         <div className="team-window">
-          <h2 className="green">Green Team</h2> {/* Light green title */}
+          <h2 className="green">Green Team</h2>
           {greenTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
               <p className="equipment-id">Equipment ID: {player.equipmentID}</p>
