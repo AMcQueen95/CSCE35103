@@ -6,104 +6,66 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Step 1: Install Java 21 manually if not installed
-
-# Check if Java 21 is installed
 java -version 2>&1 | grep "21" > /dev/null
 if [ $? -ne 0 ]; then
     echo "Java 21 is not installed. Installing Java 21 manually..."
-
-    # Update package list
     sudo apt update
-
-    # Install dependencies
     sudo apt install -y wget tar
-
-    # Download JDK 21 for ARM64
     cd ~/Downloads
     wget https://download.oracle.com/java/21/latest/jdk-21_linux-aarch64_bin.tar.gz
-
-    # Check if download was successful
     if [ -f "jdk-21_linux-aarch64_bin.tar.gz" ]; then
-        # Extract the archive
         sudo mkdir -p /usr/lib/jvm
         sudo tar -xzvf jdk-21_linux-aarch64_bin.tar.gz -C /usr/lib/jvm
-
-        # Set JAVA_HOME and update PATH
         export JAVA_HOME=/usr/lib/jvm/jdk-21
         export PATH=$JAVA_HOME/bin:$PATH
-
-        # Update shell environment
         echo "export JAVA_HOME=/usr/lib/jvm/jdk-21" >> ~/.bashrc
         echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bashrc
         source ~/.bashrc
-
-        # Verify Java version
         java --version
-
-        # Remove the downloaded tar.gz file
         rm jdk-21_linux-aarch64_bin.tar.gz
     else
         echo "Failed to download JDK 21 for ARM64. Exiting."
         exit 1
     fi
-
-    # Return to the script directory
     cd "$SCRIPT_DIR"
 else
     echo "Java 21 is already installed."
 fi
 
-# Step 2: Maven is installed within the project, so we don't need to install it globally.
+# Step 2: Maven is installed within the project
 
-# Step 3: Navigate to the backend directory in the project folder
+# Step 3: Navigate to the backend directory
 cd "$SCRIPT_DIR/backend"
 
-# Step 4: Build and run the backend
-
-# First-time setup: Make mvn executable if necessary
+# Step 4: Build and run the backend in the background
 if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
     chmod +x apache-maven-3.9.9/bin/mvn
 fi
-
 echo "Building the backend..."
 ./apache-maven-3.9.9/bin/mvn clean install
-
 echo "Running the backend..."
 ./apache-maven-3.9.9/bin/mvn spring-boot:run &
 
-# Step 5: Wait a few seconds to ensure the backend starts
-sleep 5
-
-# Step 6: Navigate to the frontend directory
-echo "Navigating to the frontend directory..."
+# Step 5: Navigate to the frontend directory
 cd "$SCRIPT_DIR/frontend"
 
-# Ensure that the package.json file exists
 if [ ! -f "package.json" ]; then
     echo "Error: package.json not found in the frontend directory."
     exit 1
 fi
 
-# Step 7: Build and run the frontend
-
-# First-time setup
 echo "Updating package list..."
 sudo apt update
 
 echo "Installing Node.js and npm..."
-sudo apt install -y nodejs npm
-
-# Install build-essential for compiling native addons (useful on ARM64)
-sudo apt install -y build-essential
+sudo apt install -y nodejs npm build-essential
 
 echo "Installing frontend dependencies..."
-npm install
+npm install || npm install --force
 
-# Handle possible issues with npm install on ARM64
-if [ $? -ne 0 ]; then
-    echo "npm install failed. Trying with --force..."
-    npm install --force
-fi
-
+# Step 6: Run the frontend in the background
 echo "Starting the frontend..."
-npm start
+npm start &
+
+# Step 7: Wait for both processes to finish
+wait
