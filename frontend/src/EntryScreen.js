@@ -104,8 +104,6 @@ function EntryScreen({players, setPlayers, startGame}) {
   // const [players, setPlayers] = useState([]);
   const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
 
-  
-
   // Function to clear players (for task 4)
   const clearPlayers = () => {
     setPlayers([]);
@@ -130,7 +128,7 @@ function EntryScreen({players, setPlayers, startGame}) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  });
 
   const addPlayer = async (playerID, playerName, equipmentID) => {
     console.log(
@@ -224,7 +222,10 @@ function EntryScreen({players, setPlayers, startGame}) {
           <button onClick={() => togglePopup("Green")}>Add Player</button>
         </div>
       </div>
-      <button onClick={startGame}>Start Game</button>
+      <div className = "ControlButtons">
+        <button onClick={startGame}>Start Game (F5)</button>
+        <button onClick={clearPlayers}>Clear Players (F12)</button>
+      </div>
     </div>
   );
 }
