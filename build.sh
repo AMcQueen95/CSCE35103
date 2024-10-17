@@ -12,17 +12,17 @@ if [ $? -ne 0 ]; then
     sudo apt update
     sudo apt install -y wget tar
     cd ~/Downloads
-    wget https://download.oracle.com/java/21/latest/jdk-21_linux-aarch64_bin.tar.gz
-    if [ -f "jdk-21_linux-aarch64_bin.tar.gz" ]; then
+    wget https://download.oracle.com/java/21/archive/jdk-21.0.4_linux-x64_bin.deb
+    if [ -f "jdk-21_linux-x64_bin.deb" ]; then
         sudo mkdir -p /usr/lib/jvm
-        sudo tar -xzvf jdk-21_linux-aarch64_bin.tar.gz -C /usr/lib/jvm
+        sudo tar -xzvf jdk-21_linux-x64_bin.deb -C /usr/lib/jvm
         export JAVA_HOME=/usr/lib/jvm/jdk-21
         export PATH=$JAVA_HOME/bin:$PATH
         echo "export JAVA_HOME=/usr/lib/jvm/jdk-21" >> ~/.bashrc
         echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bashrc
         source ~/.bashrc
         java --version
-        rm jdk-21_linux-aarch64_bin.tar.gz
+        rm jdk-21_linux-x64_bin.deb
     else
         echo "Failed to download JDK 21 for ARM64. Exiting."
         exit 1
