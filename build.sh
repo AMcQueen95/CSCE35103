@@ -2,6 +2,9 @@
 
 # CSCE35103 Project Setup
 
+# Get the absolute path of the script directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Step 1: Install Java 21 manually if not installed
 
 # Check if Java 21 is installed
@@ -36,24 +39,24 @@ if [ $? -ne 0 ]; then
 
         # Verify Java version
         java --version
+
+        # Remove the downloaded tar.gz file
+        rm jdk-21_linux-aarch64_bin.tar.gz
     else
         echo "Failed to download JDK 21 for ARM64. Exiting."
         exit 1
     fi
+
+    # Return to the script directory
+    cd "$SCRIPT_DIR"
 else
     echo "Java 21 is already installed."
 fi
 
-# Step 2: Install Maven if not installed
-if ! command -v mvn &> /dev/null; then
-    echo "Maven is not installed. Installing Maven..."
-    sudo apt install -y maven
-else
-    echo "Maven is already installed."
-fi
+# Step 2: Maven is installed within the project, so we don't need to install it globally.
 
-# Step 3: Navigate to backend in the project folder
-cd "$(dirname "$0")/backend"
+# Step 3: Navigate to the backend directory in the project folder
+cd "$SCRIPT_DIR/backend"
 
 # Step 4: Build and run the backend
 
@@ -63,20 +66,17 @@ if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
 fi
 
 echo "Building the backend..."
-./apache-maven-3.9.9/bin/mvn -f pom.xml clean install
+./apache-maven-3.9.9/bin/mvn clean install
 
 echo "Running the backend..."
-./apache-maven-3.9.9/bin/mvn -f pom.xml spring-boot:run &
+./apache-maven-3.9.9/bin/mvn spring-boot:run &
 
 # Step 5: Wait a few seconds to ensure the backend starts
 sleep 5
 
-# Step 6: Navigate back to the main project directory
-cd ..
-
-# Step 7: Navigate to the frontend folder
+# Step 6: Navigate to the frontend directory
 echo "Navigating to the frontend directory..."
-cd frontend
+cd "$SCRIPT_DIR/frontend"
 
 # Ensure that the package.json file exists
 if [ ! -f "package.json" ]; then
@@ -84,7 +84,7 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
-# Step 8: Build and run the frontend
+# Step 7: Build and run the frontend
 
 # First-time setup
 echo "Updating package list..."
