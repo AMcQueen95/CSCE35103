@@ -1,5 +1,5 @@
 # Step 5: Navigate to the frontend directory
-cd "$SCRIPT_DIR/frontend"
+cd "./frontend"
 
 if [ ! -f "package.json" ]; then
     echo "Error: package.json not found in the frontend directory."
