@@ -1,18 +1,19 @@
 #!/bin/bash
 # CSCE35103 Project Setup (Linux ARM64)
 
-# Step 1: Check Java version and install OpenJDK 21 (ARM64) if needed
+# Step 1: Check Java version and install Zulu JDK 21 (ARM64) if needed
 java -version 2>&1 | grep "21" > /dev/null
 if [ $? -ne 0 ]; then
-    echo "Installing OpenJDK 21 (ARM64)..."
+    echo "Installing Zulu JDK 21 (ARM64)..."
     sudo apt update
-    sudo apt install -y openjdk-21-jdk
-    export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-arm64
+    wget https://cdn.azul.com/zulu/bin/zulu21.32.11-ca-jdk21.0.1-linux_aarch64.deb
+    sudo dpkg -i zulu21.32.11-ca-jdk21.0.1-linux_aarch64.deb
+    export JAVA_HOME=/usr/lib/jvm/zulu-21
     export PATH=$JAVA_HOME/bin:$PATH
     source ~/.bashrc
     java --version
 else
-    echo "OpenJDK 21 (ARM64) is already installed."
+    echo "Zulu JDK 21 (ARM64) is already installed."
 fi
 
 # Step 2: Install Maven if not installed
