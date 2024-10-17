@@ -1,50 +1,73 @@
 #!/bin/bash
-# CSCE35103 Project Setup (Linux ARM64)
 
-# Step 1: Check Java version and install Zulu JDK 21 (ARM64) if needed
+# CSCE35103 Project Setup
+
+# Step 1: Install Java 21 (or higher)
+
+# Check if Java 21 is installed
 java -version 2>&1 | grep "21" > /dev/null
 if [ $? -ne 0 ]; then
-    echo "Installing Zulu JDK 21 (ARM64)..."
+    echo "Java 21 is not installed. Installing Java 21..."
+
+    # Update package list
     sudo apt update
-    wget https://cdn.azul.com/zulu/bin/zulu21.32.11-ca-jdk21.0.1-linux_aarch64.deb
-    sudo dpkg -i zulu21.32.11-ca-jdk21.0.1-linux_aarch64.deb
-    export JAVA_HOME=/usr/lib/jvm/zulu-21
+
+    # Attempt to install OpenJDK 21
+    sudo apt install -y openjdk-21-jdk
+
+    # Verify installation
+    java -version 2>&1 | grep "21" > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "OpenJDK 21 is not available via apt. Please install Java 21 manually."
+        exit 1
+    fi
+
+    # Set JAVA_HOME and update PATH
+    export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
     export PATH=$JAVA_HOME/bin:$PATH
+
+    # Update shell environment
     source ~/.bashrc
+
+    # Verify Java version
     java --version
 else
-    echo "Zulu JDK 21 (ARM64) is already installed."
+    echo "Java 21 is already installed."
 fi
 
-# Step 2: Install Maven if not installed
-if ! command -v mvn &> /dev/null; then
-    echo "Maven not found. Installing Maven..."
-    sudo apt install -y maven
-else
-    echo "Maven is already installed."
+# Step 2: Navigate to backend in the project folder
+cd backend
+
+# Step 3: Build and run the backend
+
+# First-time setup: Make mvn executable if necessary
+if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
+    chmod +x apache-maven-3.9.9/bin/mvn
 fi
 
-# Step 3: Install Node.js and npm if not installed
-if ! command -v node &> /dev/null; then
-    echo "Node.js not found. Installing Node.js and npm..."
-    sudo apt install -y nodejs npm
-else
-    echo "Node.js and npm are already installed."
-fi
+echo "Building the backend..."
+./apache-maven-3.9.9/bin/mvn -f pom.xml clean install
 
-# Step 4: Navigate to backend folder and build project
-cd ~/Documents/GitHub/CSCE35103/backend
-if [ ! -f "pom.xml" ]; then
-    echo "Error: pom.xml not found in backend directory."
-    exit 1
-fi
+echo "Running the backend..."
+./apache-maven-3.9.9/bin/mvn -f pom.xml spring-boot:run &
 
-echo "Building and running the backend..."
-mvn clean install
-mvn spring-boot:run &
+# Step 4: Wait a few seconds to ensure the backend starts
+sleep 5
 
-# Step 5: Frontend setup
-echo "Setting up frontend..."
-cd ~/Documents/GitHub/CSCE35103/frontend
+# Step 5: Navigate to the frontend folder
+cd ../frontend
+
+# Step 6: Build and run the frontend
+
+# First-time setup
+echo "Updating package list..."
+sudo apt update
+
+echo "Installing Node.js and npm..."
+sudo apt install -y nodejs npm
+
+echo "Installing frontend dependencies..."
 npm install
+
+echo "Starting the frontend..."
 npm start
