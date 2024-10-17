@@ -64,7 +64,10 @@ echo "JAVA_HOME is set to $JAVA_HOME"
 
 # Step 2: Maven is installed within the project, no need to install globally
 
-# Step 3: Make Maven executable if necessary
+# Step 3: Navigate to the backend directory (already in BACKEND_DIR)
+cd "$BACKEND_DIR"
+
+# Step 4: Make Maven executable if necessary
 if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
     chmod +x apache-maven-3.9.9/bin/mvn
 fi
@@ -76,5 +79,5 @@ echo "Building the backend..."
 
 echo "Running the backend..."
 
-# Run the backend with JAVA_HOME specified
+# Run the backend without '&' to keep it in the foreground
 ./apache-maven-3.9.9/bin/mvn -Djava.home="$JAVA_HOME" spring-boot:run
