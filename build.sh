@@ -71,9 +71,12 @@ echo "Running the backend..."
 # Step 5: Wait a few seconds to ensure the backend starts
 sleep 5
 
-# Step 6: Navigate to the frontend folder
+# Step 6: Navigate back to the main project directory
+cd ..
+
+# Step 7: Navigate to the frontend folder
 echo "Navigating to the frontend directory..."
-cd "$(dirname "$0")/frontend"
+cd frontend
 
 # Ensure that the package.json file exists
 if [ ! -f "package.json" ]; then
@@ -81,7 +84,7 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
-# Step 7: Build and run the frontend
+# Step 8: Build and run the frontend
 
 # First-time setup
 echo "Updating package list..."
