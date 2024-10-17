@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PlayActionDisplay.css';
 
-function PlayActionDisplay({ players, backToEntryScreen }) {
+function PlayActionDisplay({ players, resetGame }) {
   //10 second countdown
   const [countdown, setCountdown] = useState(10);
 
@@ -49,7 +49,7 @@ function PlayActionDisplay({ players, backToEntryScreen }) {
         </div>
       </div>
       <div className="countdown-timer">Game Starts in {countdown} seconds</div>
-      <button className="back-button" onClick={backToEntryScreen}>
+      <button className="back-button" onClick={resetGame}>
         Back
       </button>
     </div>
