@@ -1,6 +1,5 @@
 // EntryScreen.js
 import './EntryScreen.css';
-import PlayActionDisplay from './PlayActionDisplay';
 import React, { useState, useEffect } from 'react';
 import { addPlayerToDatabase, getPlayerByID, sendEquipmentID, playerDoesNotExist } from './api';
 
@@ -100,22 +99,12 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
 }
 
 // This is the Entry Screen in its entirety (includes player entry slots, controls, etc.)
-function EntryScreen() {
+function EntryScreen({players, setPlayers, startGame}) {
   const [popup, setPopup] = useState({ isShown: false });
-  const [players, setPlayers] = useState([]);
+  // const [players, setPlayers] = useState([]);
   const [currentPlayerTeam, setCurrentPlayerTeam] = useState("Red");
 
-  const [isGameStarted, setIsGameStarted] = useState(false);
-
-  // Function to start the game
-  const startGame = () => {
-    setIsGameStarted(true);
-  };
-
-  // Function to reset the game
-  const resetGame = () => {
-    setIsGameStarted(false);
-  };
+  
 
   // Function to clear players (for task 4)
   const clearPlayers = () => {
@@ -180,12 +169,6 @@ function EntryScreen() {
     name: `PlayerEntryInput ${popup.isShown ? "Shown" : ""}`,
   };
 
-  if (isGameStarted) {
-    return (
-      <PlayActionDisplay players={players} backToEntryScreen={resetGame} />
-    );
-  }
-
   return (
     <div>
       <div id="_PlayerEntryPopup" className={entryClass.name}>
@@ -241,6 +224,7 @@ function EntryScreen() {
           <button onClick={() => togglePopup("Green")}>Add Player</button>
         </div>
       </div>
+      <button onClick={startGame}>Start Game</button>
     </div>
   );
 }
