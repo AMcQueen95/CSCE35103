@@ -1,7 +1,7 @@
 # Step 2: Maven is installed within the project
 
 # Step 3: Navigate to the backend directory
-cd backend/apache-maven-3.9.9/mvn
+cd backend/apache-maven-3.9.9/bin
 chmod +x mvn
 
 # Step 4: Build and run the backend in the background
