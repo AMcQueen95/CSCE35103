@@ -4,10 +4,10 @@
 cd "$SCRIPT_DIR/backend"
 
 # Step 4: Build and run the backend in the background
-if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
-    chmod +x apache-maven-3.9.9/bin/mvn
+if [ ! -x "apache-maven-3.9.9/bin" ]; then
+    chmod +x apache-maven-3.9.9/bin
 fi
 echo "Building the backend..."
-./apache-maven-3.9.9/bin/mvn clean install
+./mvn -f ../../pom.xml clean install
 echo "Running the backend..."
-./apache-maven-3.9.9/bin/mvn spring-boot:run
+./mvn -f ../../pom.xml spring-boot:run
