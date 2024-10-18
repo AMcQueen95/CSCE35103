@@ -31,8 +31,7 @@ if [ $? -ne 0 ]; then
     
     if [ -f "$DEB_FILE" ]; then
         sudo dpkg -i $DEB_FILE
-        sudo mkdir -p /usr/lib/jvm
-        sudo mv /usr/lib/jvm/jdk-21 /usr/lib/jvm
+        
         export JAVA_HOME=/usr/lib/jvm/jdk-21
         export PATH=$JAVA_HOME/bin:$PATH
         echo "export JAVA_HOME=/usr/lib/jvm/jdk-21" >> ~/.bashrc
@@ -50,16 +49,7 @@ else
     echo "Java 21 is already installed."
 fi
 
-# Step 2: Maven is installed within the project
-
-# Step 3: Navigate to the backend directory
-cd "$SCRIPT_DIR/backend"
-
-# Step 4: Build and run the backend in the background
-if [ ! -x "apache-maven-3.9.9/bin/mvn" ]; then
-    chmod +x apache-maven-3.9.9/bin/mvn
-fi
-echo "Building the backend..."
-./apache-maven-3.9.9/bin/mvn clean install
-echo "Running the backend..."
-./apache-maven-3.9.9/bin/mvn spring-boot:run
+echo "granting permission to run backend.sh"
+chmod +x backend.sh
+echo "granting permission to run frontend.sh"
+chmod +x frontend.sh
