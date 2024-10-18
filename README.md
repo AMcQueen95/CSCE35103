@@ -2,43 +2,19 @@
 
 Software Engineering lazer tag project
 
-## Project Setup
-
-### Requirements:
-
-- Java 21 (or higher)
-- Maven
-- Node.js
-
 ## Instructions to Run Project
 
-1. Visit https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html and download Linux x64 Debian Package. Open terminal and navigate to the `Download` folder.
-2. Run the following commands to install JDK-21 and change the path variables (These only need to be run if java --version returns version older than JDK-21):
-   ```bash
-   sudo apt install default-jre
-   sudo dpkg -i jdk-21.0.3_linux-x64_bin.deb
-   export JAVA_HOME=/usr/lib/jvm/jdk-21-oracle-x64
-   export PATH=$JAVA_HOME/bin:$PATH
-   source ~/.bashrc
-   java --version
-   ```
-3. Navigate to `backend` in the `CSCE35103-main` folder.
-4. Run the following commands to build and run the backend (chmod +x mvn only needs to be run the first time opening project):
-   ```bash
-   cd apache-maven-3.9.9/bin
-   chmod +x mvn
-   ./mvn -f ../../pom.xml clean install
-   ./mvn -f ../../pom.xml spring-boot:run 
-   ```
-5. Open new terminal while leaving the last terminal open
-6. Navigate to the `frontend` folder
-7. Run the following commands to build and run the frontend (First three commands only need to be run the first time the project is run):
-   ```bash
-   sudo apt update
-   sudo apt install nodejs npm
-   npm install
-   npm start
-   ```
+### Project Setup
+1. For initial project setup open new terminal, navigate to the CSCE35103 directory and run the following command
+```./build.sh```
+
+### Running Application
+1. Open new terminal, navigate to the CSCE35103 directory and run following command
+```./backend.sh```
+
+2. Open new terminal, navigate to the CSCE35103 directory and run following command
+```./frontend.sh```
+
 ## Contributors
 
 eli-bosch -> Eli Bosch,<br>
