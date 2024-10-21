@@ -171,3 +171,19 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.ControlButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ControlButtons > button {
+    margin: 10px;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 2px 2px 4px 0px black;
+    border-radius: 4px;
+}
