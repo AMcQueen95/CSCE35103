@@ -23,6 +23,11 @@ function PlayActionDisplay({ players, resetGame }) {
   const redTeamPlayers = players.filter((player) => player.playerTeam === 'Red');
   const greenTeamPlayers = players.filter((player) => player.playerTeam === 'Green');
 
+  const playActionsCountdown = {
+    countdown: `countdown ${countdown > 0 ? "Shown" : ""}`,
+    playActions: `play-actions ${countdown === 0 ? "Shown" : ""}`
+  };
+
   return (
     <div className="play-action-container">
       <div className="retro-tv-screen">
@@ -31,9 +36,8 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team</h2> 
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              <p className="equipment-id">Equipment ID: {player.equipmentID}</p>
-              <p className="player-id">Player ID: {player.playerID}</p>
               <p className="player-name">Player Name: {player.playerName}</p>
+              <p>Score: </p>
             </div>
           ))}
         </div>
@@ -41,17 +45,21 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="green">Green Team</h2>
           {greenTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              <p className="equipment-id">Equipment ID: {player.equipmentID}</p>
-              <p className="player-id">Player ID: {player.playerID}</p>
               <p className="player-name">Player Name: {player.playerName}</p>
+              <p>Score: </p>
             </div>
           ))}
         </div>
       </div>
-      <div className="countdown-timer">Game Starts in {countdown} seconds</div>
-      <button className="back-button" onClick={resetGame}>
-        Back
-      </button>
+      <div className="play-actions/countdown-container">
+          <div className={playActionsCountdown.countdown}>
+            <p className="countdown-timer">Game Starts in {countdown} seconds</p>
+          </div>
+          <div className={playActionsCountdown.playActions}>
+            <h2>Play Actions</h2>
+          </div>
+      </div>
+      <button className="back-button" onClick={resetGame}>Back</button>
     </div>
   );
 }
