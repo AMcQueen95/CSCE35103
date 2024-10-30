@@ -12,7 +12,7 @@ import Track07 from './Tracks/Track07.mp3';
 import Track08 from './Tracks/Track08.mp3';
 
 function PlayActionDisplay({ players, resetGame }) {
-  const [initialCountdown, setInitialCountdown] = useState(20);
+  const [initialCountdown, setInitialCountdown] = useState(30);
   const [secondaryCountdown, setSecondaryCountdown] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
 
@@ -35,7 +35,7 @@ function PlayActionDisplay({ players, resetGame }) {
   }, []);
 
   useEffect(() => {
-    if (initialCountdown === 15 && !audioPlaying) {
+    if (initialCountdown === 18 && !audioPlaying) {
       const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
       const audio = new Audio(randomTrack);
       audio.play();
