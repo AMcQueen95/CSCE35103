@@ -1,13 +1,11 @@
 package com.example.backend.udp;
-
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
-
 import org.springframework.stereotype.Component;
-
 import jakarta.annotation.PostConstruct;
+import com.example.backend.controller.WebController;
 
 @Component
 public class UDPService {
@@ -19,7 +17,7 @@ public class UDPService {
 
     public void start() {
         try {
-            socket = new DatagramSocket(7501); // Listening on port 7500
+            socket = new DatagramSocket(7501); // Listening on port 7501
             // Start receiving packets in a new thread
             new Thread(this::receiveDatagram).start();
         } catch (Exception e) {
@@ -58,13 +56,17 @@ public class UDPService {
         }
 
         try {
-            byte[] receiveBuffer = new byte[4]; // Buffer to hold incoming datagrams
+            byte[] receiveBuffer = new byte[1024]; // Buffer to hold incoming datagrams
             while (true) {
                 DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(packet); // Receive the packet
-
-                int playerId = convertByteArrayToInt(receiveBuffer);
-                System.out.println("Received player ID: " + playerId); // Handle the received ID
+                String received = new String(packet.getData(), "UTF-8");
+                /*
+                 * 
+                 *  WebController.functionName(String recieved)
+                 * 
+                 */
+                System.out.println("Received String: " + received); // Handle the received ID
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -191,3 +191,52 @@
     text-align: center;
   }
   
+
+  /* Existing styles remain unchanged */
+
+.event-box {
+    width: 84vw;
+    height: 40vh;
+    margin: 0;
+    margin-top: 5vh;
+    padding: 10px;
+    display: none;
+    border: 10px solid #222;
+    border-radius: 10px;
+    background-color: #111;
+    overflow-y: auto;
+    color: white;
+  }
+  
+  .event-box.large {
+    display: block;
+  }
+  
+  .event-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .event-item {
+    margin: 5px 0;
+    font-size: 18px;
+  }
+  
+  .secondary-timer {
+    margin-top: 20px;
+    font-size: 24px;
+    color: #d3d3d3;
+    text-align: center;
+  }
+  
+  .player-score {
+    margin-left: 10px;
+    color: #d3d3d3;
+  }
+  
+  .team-window h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
