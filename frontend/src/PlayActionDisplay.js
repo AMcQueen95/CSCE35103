@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import axios from 'axios';
 import './PlayActionDisplay.css';
 
@@ -19,6 +19,9 @@ function PlayActionDisplay({ players, resetGame }) {
   const [events, setEvents] = useState([]);
   const [playerScores, setPlayerScores] = useState({});
   const [teamScores, setTeamScores] = useState({ Red: 0, Green: 0 });
+
+  const audioRef = useRef(null); // Reference to the audio object
+  const socketRef = useRef(null); // Reference to the WebSocket
 
   const tracks = useMemo(
     () => [Track01, Track02, Track03, Track04, Track05, Track06, Track07, Track08],
@@ -47,7 +50,9 @@ function PlayActionDisplay({ players, resetGame }) {
       const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
       const audio = new Audio(randomTrack);
       audio.play();
+      audioRef.current = audio; // Store the audio object
       setAudioPlaying(true);
+      console.log('Playing Track ' + randomTrack);
     }
   }, [initialCountdown, audioPlaying, tracks]);
 
@@ -71,6 +76,22 @@ function PlayActionDisplay({ players, resetGame }) {
     return () => clearInterval(timer);
   }, [secondaryCountdown]);
 
+  // Cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      // Stop audio if playing
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      // Close WebSocket if open
+      if (socketRef.current) {
+        socketRef.current.close();
+        socketRef.current = null;
+      }
+    };
+  }, []);
+
   // Send start signal to backend
   const sendStartSignal = async () => {
     try {
@@ -85,6 +106,7 @@ function PlayActionDisplay({ players, resetGame }) {
   // Set up WebSocket connection
   const initiateWebSocketConnection = () => {
     const socket = new WebSocket('ws://localhost:8080/game');
+    socketRef.current = socket; // Store the WebSocket reference
 
     socket.onopen = () => {
       console.log('WebSocket connection established');
@@ -106,8 +128,6 @@ function PlayActionDisplay({ players, resetGame }) {
     // "equipmentID1:equipmentID2" (player hit)
     // "equipmentID:43" or "equipmentID:53" (base hit)
     // Update events list and player/team scores accordingly
-
-    setEvents((prevEvents) => [...prevEvents, message]);
 
     const [senderId, targetId] = message.split(':');
 
@@ -203,6 +223,29 @@ function PlayActionDisplay({ players, resetGame }) {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  // Handle Back button click
+  const handleBackButtonClick = () => {
+    // Stop audio if playing
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      setAudioPlaying(false);
+    }
+    // Close WebSocket if open
+    if (socketRef.current) {
+      socketRef.current.close();
+      socketRef.current = null;
+    }
+    // Reset state if necessary
+    setInitialCountdown(30);
+    setSecondaryCountdown(null);
+    setEvents([]);
+    setPlayerScores({});
+    setTeamScores({ Red: 0, Green: 0 });
+    // Call the resetGame function passed as a prop
+    resetGame();
+  };
+
   return (
     <div className="play-action-container">
       <div className="retro-tv-screen">
@@ -262,7 +305,7 @@ function PlayActionDisplay({ players, resetGame }) {
         </div>
       )}
 
-      <button className="back-button" onClick={resetGame}>
+      <button className="back-button" onClick={handleBackButtonClick}>
         Back
       </button>
     </div>
