@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import './PlayActionDisplay.css';
+import { sendCode } from './api';
 
 // Import audio files
 import Track01 from './Tracks/Track01.mp3';
@@ -93,7 +94,7 @@ function PlayActionDisplay({ players, resetGame }) {
 
   // Send start signal to backend
   const sendStartSignal = async () => {
-
+    sendCode(202);
   };
 
   // Set up WebSocket connection
