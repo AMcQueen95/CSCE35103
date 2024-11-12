@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import axios from 'axios';
 import './PlayActionDisplay.css';
 
 // Import audio files
@@ -94,13 +93,7 @@ function PlayActionDisplay({ players, resetGame }) {
 
   // Send start signal to backend
   const sendStartSignal = async () => {
-    try {
-      await axios.post('http://localhost:8080/api/startGame');
-      console.log('Start signal sent to backend');
-      initiateWebSocketConnection();
-    } catch (error) {
-      console.error('Error sending start signal:', error);
-    }
+
   };
 
   // Set up WebSocket connection
