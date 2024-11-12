@@ -69,18 +69,18 @@ public class WebController {
         }
     }
 
-    // @PostMapping("/sendCode")
-    // public ResponseEntity<Void> sendCode(@PathVariable int code) {
-    //     try {
-    //         udpService.sendDatagram("localhost", 7500, code);
-    //             System.out.println("Function \"sendCode\" has receieved the code: " + code)
-    //         return ResponseEntity.ok().build(); // Return HTTP 200 OK
-    //     } catch (Exception e) {
-    //         // Log the exception if necessary
-    //         System.err.println("Error sending Integer Code: " + e.getMessage());
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return HTTP 500 if an error occurs
-    //     }
-    // }
+    @PostMapping("/sendCode")
+    public ResponseEntity<Void> sendCode(@PathVariable int code) {
+        try {
+            udpService.sendDatagram("localhost", 7500, code);
+                System.out.println("Function \"sendCode\" has receieved the code: " + code);
+            return ResponseEntity.ok().build(); // Return HTTP 200 OK
+        } catch (Exception e) {
+            // Log the exception if necessary
+            System.err.println("Error sending Integer Code: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return HTTP 500 if an error occurs
+        }
+    }
 
 
     @PostMapping("/addPlayer")
