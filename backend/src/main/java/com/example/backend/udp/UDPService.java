@@ -60,13 +60,13 @@ public class UDPService {
             while (true) {
                 DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(packet); // Receive the packet
-                String playerId = new String(packet.getData(), "UTF-8");
+                String received = new String(packet.getData(), "UTF-8");
                 /*
                  * 
                  *  WebController.functionName(String recieved)
                  * 
                  */
-                System.out.println("Received player ID: " + playerId); // Handle the received ID
+                System.out.println("Received String" + received); // Handle the received ID
             }
         } catch (Exception e) {
             e.printStackTrace();
