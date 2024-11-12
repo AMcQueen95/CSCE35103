@@ -1,3 +1,13 @@
+:root {
+    --green: #7fff7f;
+    --red: #ff7f7f;
+    --dark-grey: #333;
+}
+
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
 .play-action-container {
     display: flex;
     flex-direction: column;
@@ -5,15 +15,14 @@
     justify-content: center;
     height: 100vh;
     background-color: black;
-    color: #7fff7f;
-    font-family: 'Courier New', Courier, monospace;
+    /* color: #7fff7f; */
 }
 
 .retro-tv-screen {
     width: 80vw;
     height:40vh;
     padding: 20px;
-    border: 10px solid #333;
+    border: 10px solid var(--dark-grey);
     border-radius: 15px;
     background-color: #111;
     position: relative;
@@ -69,11 +78,11 @@
 }
 
 .team-window h2.red {
-    color: #ff7f7f;
+    color: var(--red);
 }
 
 .team-window h2.green {
-    color: #7fff7f;
+    color: var(--green);
 }
 
 .player-slot {
@@ -101,7 +110,7 @@
     font-family: 'Courier New', Courier, monospace;
     background-color: #d3d3d3;
     color: black;
-    border: 2px solid #333;
+    border: 2px solid var(--dark-grey);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -145,7 +154,7 @@
     justify-content: center;
     flex-direction: column;
     padding: 20px;
-    border: 10px solid #333;
+    border: 10px solid var(--dark-grey);
     border-radius: 15px;
     background-color: #111;
     position: relative;

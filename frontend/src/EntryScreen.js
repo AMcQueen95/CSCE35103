@@ -14,6 +14,24 @@ function PlayerSlot({ equipmentID, playerID, playerName }) {
   );
 }
 
+function PlayersHeader() {
+  return (
+    <div>
+      <div className="Header Small">
+        <p className='EquipmentID Small'>E. ID</p>
+        <p className="PlayerID Small">P. ID</p>
+        <p className="PlayerName Small">Name</p>
+      </div>
+      <div className="Header Large">
+        <p className="EquipmentID Large">Equipment ID</p>
+        <p className="PlayerID Large">Player ID</p>
+        <p className="PlayerName Large">Player Name</p>
+      </div>
+    </div>
+    
+  );
+}
+
 // This is the first Player Popup, it prompts you for player ID and then checks the database for that ID
 // If the ID cannot be found another popup will appear asking for new player name, but if player ID is found
 // the equipment ID popup will appear.
@@ -93,7 +111,10 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
           Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
         </label>
       </div>
-      <button onClick={handleSubmit}>Submit Player</button>
+      <div className="Popup Buttons">
+        <button onClick={handleSubmit}>Submit</button>
+        <button>Cancel</button>
+      </div>
     </div>
   );
 }
@@ -168,7 +189,7 @@ function EntryScreen({players, setPlayers, startGame}) {
   };
 
   return (
-    <div>
+    <div className="Background">
       <div id="_PlayerEntryPopup" className={entryClass.name}>
         <PlayerIDPopup
           togglePopup={togglePopup}
@@ -179,11 +200,7 @@ function EntryScreen({players, setPlayers, startGame}) {
       <div className="EntrySlots">
         <div className="Red Team">
           <p>Red Team</p>
-          <div className="Header">
-            <p className="EquipmentID">Equipment ID</p>
-            <p className="PlayerID">Player ID</p>
-            <p className="PlayerName">Player Name</p>
-          </div>
+          <PlayersHeader></PlayersHeader>
           {/* Right here is where the player list gets populated */}
           {players
             .filter(
@@ -201,11 +218,7 @@ function EntryScreen({players, setPlayers, startGame}) {
         </div>
         <div className="Green Team">
           <p>Green Team</p>
-          <div className="Header">
-            <p className="EquipmentID">Equipment ID</p>
-            <p className="PlayerID">Player ID</p>
-            <p className="PlayerName">Player Name</p>
-          </div>
+          <PlayersHeader></PlayersHeader>
           {players
             .filter(
               (player) =>
