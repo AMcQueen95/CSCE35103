@@ -87,33 +87,35 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
   };
 
   return (
-    <div className="EntryPopupBox">
-      {/* This is state = 0, this is the part that requests your ID*/}
-      <div className={"PlayerIDInput state" + popupState}>
-        <label>
-          Player ID: <input value={playerID} onChange={handlePlayerIDChange} type="number" />
-        </label>
-      </div>
+    <div className="EntryPopupBoxContainer">
+      <div className="EntryPopupBox">
+        {/* This is state = 0, this is the part that requests your ID*/}
+        <div className={"PlayerIDInput state" + popupState}>
+          <label>
+            Player ID: <input value={playerID} onChange={handlePlayerIDChange} type="number" />
+          </label>
+        </div>
 
-      {/* This is state = 1, this is the part that if your ID is not in the database, it will request a player name for your new player */}
-      <div className={"PlayerNameInput state" + popupState}>
-        <p>Player ID: {playerID}</p>
-        <label>
-          Player Name: <input value={playerName} onChange={handlePlayerNameChange} type="text" />
-        </label>
-      </div>
+        {/* This is state = 1, this is the part that if your ID is not in the database, it will request a player name for your new player */}
+        <div className={"PlayerNameInput state" + popupState}>
+          <p>Player ID: {playerID}</p>
+          <label>
+            Player Name: <input value={playerName} onChange={handlePlayerNameChange} type="text" />
+          </label>
+        </div>
 
-      {/* This is state = 2, this is the final state of the popup, It displays the player name and ID and requests your equipment ID */}
-      <div className={"EquipmentIDInput state" + popupState}>
-        <p>Player ID: {playerID}</p>
-        <p>Player Name: {playerName}</p>
-        <label>
-          Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
-        </label>
-      </div>
-      <div className="Popup Buttons">
-        <button onClick={handleSubmit}>Submit</button>
-        <button>Cancel</button>
+        {/* This is state = 2, this is the final state of the popup, It displays the player name and ID and requests your equipment ID */}
+        <div className={"EquipmentIDInput state" + popupState}>
+          <p>Player ID: {playerID}</p>
+          <p>Player Name: {playerName}</p>
+          <label>
+            Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
+          </label>
+        </div>
+        <div className="Popup Buttons">
+          <button onClick={handleSubmit}>Submit</button>
+          <button>Cancel</button>
+        </div>
       </div>
     </div>
   );
