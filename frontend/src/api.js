@@ -30,7 +30,7 @@ export const sendEquipmentID = async (equipmentID) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-                equipmentID: equipmentID, 
+                equipmentId: equipmentID, 
             }), 
         });
 
