@@ -60,7 +60,7 @@ public class WebController {
     @PostMapping("/sendEquipmentID")
     public ResponseEntity<Void> sendEquipmentID(@RequestBody Player player) {
         try {
-            udpService.sendDatagram("localhost", 7500, player.getEquipmentId());
+            udpService.sendDatagram(String.valueOf(player.getEquipmentId()));
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
         } catch (Exception e) {
             // Log the exception if necessary
@@ -72,7 +72,7 @@ public class WebController {
     @PostMapping("/sendCode")
     public ResponseEntity<Void> sendCode(@PathVariable int code) {
         try {
-            udpService.sendDatagram("localhost", 7500, code);
+            udpService.sendDatagram(String.valueOf(code));
             System.out.println("Function \"sendCode\" has receieved the code: " + code);
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
         } catch (Exception e) {
