@@ -47,7 +47,7 @@ public class UDPService {
             byte[] sendBuffer = code.getBytes(StandardCharsets.UTF_8); //Turns the code into string
             InetAddress address = InetAddress.getByName(this.host); //converts localhost to address
 
-            DatagramPacket packet = new DatagramPacket(sendBuffer, this.bufferSize, address, this.sendPort); //Creates packet w/information
+            DatagramPacket packet = new DatagramPacket(sendBuffer, sendBuffer.length, address, this.sendPort); //Creates packet w/information
             this.sendSocket.send(packet); // Send the datagram
 
             System.out.println("UDP packet sent with Code: " + code + " to " + this.host + " : " + this.sendPort);
