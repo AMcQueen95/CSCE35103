@@ -59,6 +59,7 @@ public class WebController {
 
     @PostMapping("/sendEquipmentID")
     public ResponseEntity<Void> sendEquipmentID(@RequestBody Player player) {
+        System.out.println("Sending equipment ID: " + player.getEquipmentId());
         try {
             udpService.sendDatagram("localhost", 7500, player.getEquipmentId());
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
