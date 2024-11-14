@@ -71,7 +71,7 @@ public class WebController {
     }
 
     @PostMapping("/sendCode")
-    public ResponseEntity<Void> sendCode(@PathVariable int code) {
+    public ResponseEntity<Void> sendCode(@RequestBody Integer code) {
         try {
             udpService.sendDatagram(String.valueOf(code));
             System.out.println("Function \"sendCode\" has receieved the code: " + code);
