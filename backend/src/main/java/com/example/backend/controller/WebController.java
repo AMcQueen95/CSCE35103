@@ -59,6 +59,7 @@ public class WebController {
 
     @PostMapping("/sendEquipmentID")
     public ResponseEntity<Void> sendEquipmentID(@RequestBody Player player) {
+        System.out.println("Sending equipment ID: " + player.getEquipmentId());
         try {
             udpService.sendDatagram(String.valueOf(player.getEquipmentId()));
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
@@ -70,7 +71,7 @@ public class WebController {
     }
 
     @PostMapping("/sendCode")
-    public ResponseEntity<Void> sendCode(@PathVariable int code) {
+    public ResponseEntity<Void> sendCode(@RequestBody Integer code) {
         try {
             udpService.sendDatagram(String.valueOf(code));
             System.out.println("Function \"sendCode\" has receieved the code: " + code);

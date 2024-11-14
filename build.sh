@@ -32,9 +32,9 @@ if [ $? -ne 0 ]; then
     if [ -f "$DEB_FILE" ]; then
         sudo dpkg -i $DEB_FILE
         
-        export JAVA_HOME=/usr/lib/jvm/jdk-21
+        export JAVA_HOME=/usr/lib/jvm/jdk-21.0.4-oracle-x64
         export PATH=$JAVA_HOME/bin:$PATH
-        echo "export JAVA_HOME=/usr/lib/jvm/jdk-21" >> ~/.bashrc
+        echo "export JAVA_HOME=/usr/lib/jvm/jdk-21.0.4-oracle-x64" >> ~/.bashrc
         echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bashrc
         source ~/.bashrc
         java --version
@@ -47,6 +47,11 @@ if [ $? -ne 0 ]; then
     cd "$SCRIPT_DIR"
 else
     echo "Java 21 is already installed."
+
+    # Set JAVA_HOME and PATH if Java is already installed
+    export JAVA_HOME=/usr/lib/jvm/jdk-21.0.4-oracle-x64
+    export PATH=$JAVA_HOME/bin:$PATH
+    echo "JAVA_HOME is set to $JAVA_HOME"
 fi
 
 echo "granting permission to run backend.sh"
