@@ -60,6 +60,7 @@ public class WebController {
 
     @GetMapping("/checkForUpdates")
     public List<String> checkForUpdates() {
+        System.out.println("Kill Yourself. Kill yourself. Kill yourself. Wake up.");
         return List.of("10:15", "12:07", "10:53");
     }
 
