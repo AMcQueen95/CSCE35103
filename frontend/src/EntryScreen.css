@@ -44,10 +44,6 @@
     overflow: hidden;
 }
 
-.Header.Large {
-    /* background-color: var(--green); */
-}
-
 @media only screen and (max-width: 1400px) {
     .Header.Small {
         position: static;

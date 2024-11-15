@@ -97,6 +97,11 @@
     color: white;
 }
 
+.base-hit {
+    padding: 2px;
+    border: 2px solid white;
+}
+
 .countdown-timer {
     margin-top: 20px;
     font-size: 24px;

@@ -21,8 +21,8 @@ function PlayActionDisplay({ players, resetGame }) {
   const [teamScores, setTeamScores] = useState({ Red: 0, Green: 0 });
 
   const audioRef = useRef(null); // Reference to the audio object
-  const socketRef = useRef(null); // Reference to the WebSocket
 
+  //Store all the tracks in an array to be able to randomly select one.
   const tracks = useMemo(
     () => [Track01, Track02, Track03, Track04, Track05, Track06, Track07, Track08],
     []
@@ -84,37 +84,36 @@ function PlayActionDisplay({ players, resetGame }) {
         audioRef.current.pause();
         audioRef.current = null;
       }
-      // Close WebSocket if open
-      if (socketRef.current) {
-        socketRef.current.close();
-        socketRef.current = null;
-      }
     };
   }, []);
 
   // Send start signal to backend
   const sendStartSignal = async () => {
+    console.log("Sending Start Code");
     sendCode(202);
   };
 
-  // Set up WebSocket connection
-  const initiateWebSocketConnection = () => {
-    const socket = new WebSocket('ws://localhost:8080/game');
-    socketRef.current = socket; // Store the WebSocket reference
+  //Polling the backend every 1 second for events.
+  useEffect(() => {
+    // Start polling every 5 seconds
+    const interval = setInterval(() => {
+      // Fetch the data from the backend
+      fetch('/api/checkForUpdates')
+        .then(response => response.json())  // Parse JSON response
+        .then(data => {
+          data.forEach(message => {
+            handleGameEvent(message);
+          });
+        })
+        .catch(error => {
+          console.error("Error fetching updates:", error);
+        });
+    }, 1000); // Poll every 5 seconds
 
-    socket.onopen = () => {
-      console.log('WebSocket connection established');
-    };
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, []);  // Empty dependency array means this runs only once, on mount
 
-    socket.onmessage = (event) => {
-      console.log('Received event:', event.data);
-      handleGameEvent(event.data);
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-  };
 
   // Handle game events received from backend
   const handleGameEvent = (message) => {
@@ -225,11 +224,7 @@ function PlayActionDisplay({ players, resetGame }) {
       audioRef.current = null;
       setAudioPlaying(false);
     }
-    // Close WebSocket if open
-    if (socketRef.current) {
-      socketRef.current.close();
-      socketRef.current = null;
-    }
+
     // Reset state if necessary
     setInitialCountdown(30);
     setSecondaryCountdown(null);
@@ -249,10 +244,9 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              <p className="player-name">
-                {player.playerName}{' '}
-                <span className="player-score">Score: {player.score}</span>
-              </p>
+              <span className="base-hit">B</span>
+              <p className="player-name">{player.playerName}</p>
+              <span className="player-score">Score: {player.score}</span>
             </div>
           ))}
         </div>
