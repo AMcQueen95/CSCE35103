@@ -35,9 +35,9 @@ public class WebController {
 
         // debugging
         if (playerExists) {
-            System.out.println("Player with ID " + id + "exists in the database!");
+            System.out.println("Player with ID " + id + " exists in the database!");
         } else {
-            System.out.println("Player with ID " + id + "does not exist in the database!");
+            System.out.println("Player with ID " + id + " does not exist in the database!");
         }
 
         return ResponseEntity.ok(!playerExists); // true if not in DB, false if exists
@@ -60,7 +60,6 @@ public class WebController {
 
     @GetMapping("/checkForUpdates")
     public List<String> checkForUpdates() {
-        System.out.println("Kill Yourself. Kill yourself. Kill yourself. Wake up.");
         return List.of("10:15", "12:07", "10:53");
     }
 
