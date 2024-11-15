@@ -105,10 +105,16 @@ function PlayActionDisplay({ players, resetGame }) {
       if(hasStarted.current) {
         // Fetch the data from the backend
         fetch('/api/checkForUpdates')
-        .then(response => response.json())  // Parse JSON response
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
+          console.log("Fetched data:", data); // Should log the array ["10:15", "12:07", "10:53"]
           data.forEach(message => {
-            console.log(message);
+            console.log("Processing message:", message);
             handleGameEvent(message);
           });
         })
