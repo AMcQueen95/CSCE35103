@@ -69,6 +69,9 @@ public class WebController {
     @GetMapping("/checkForUpdates")
     public List<String> checkForUpdates() {
         List<String> updates = new ArrayList<>(messages);
+        for (String message : updates) {
+            System.out.println("Message Currently In Queue: " + message);
+        }
         messages.clear();
         return updates;
     }
