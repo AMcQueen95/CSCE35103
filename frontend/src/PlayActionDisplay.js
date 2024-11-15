@@ -12,6 +12,9 @@ import Track06 from './Tracks/Track06.mp3';
 import Track07 from './Tracks/Track07.mp3';
 import Track08 from './Tracks/Track08.mp3';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
+
+
 function PlayActionDisplay({ players, resetGame }) {
   const [initialCountdown, setInitialCountdown] = useState(30);
   const [secondaryCountdown, setSecondaryCountdown] = useState(null);
@@ -104,7 +107,7 @@ function PlayActionDisplay({ players, resetGame }) {
     const interval = setInterval(() => {
       if(hasStarted.current) {
         // Fetch the data from the backend
-        fetch('/api/checkForUpdates')
+        fetch(`${API_BASE_URL}/api/checkForUpdates`)
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
