@@ -139,6 +139,8 @@ function PlayActionDisplay({ players, resetGame }) {
 
     const [senderId, targetId] = message.split(':');
 
+    sendCode(targetId); //Transmit out the shot player to the traffic generator.
+
     // Base hit codes
     const baseHitCodes = {
       '43': 'Green Base',
