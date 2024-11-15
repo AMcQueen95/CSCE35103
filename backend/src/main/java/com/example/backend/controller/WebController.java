@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,11 @@ public class WebController {
             System.out.println("Player not found in database");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found");
         }
+    }
+
+    @GetMapping("/checkForUpdates")
+    public List<String> checkForUpdates() {
+        return List.of("10:15", "12:07", "10:53");
     }
 
     @PostMapping("/sendEquipmentID")

@@ -2,10 +2,11 @@ package com.example.backend.udp;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import org.springframework.stereotype.Component;
-import jakarta.annotation.PostConstruct;
-import com.example.backend.controller.WebController;
 import java.nio.charset.StandardCharsets;
+
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class UDPService {
@@ -78,7 +79,7 @@ public class UDPService {
                  *  WebController.functionName(recieved)
                  * 
                  */
-                System.out.println("Received String: \"" + received + "\""); // Handle the received ID
+                System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
             }
         } catch (Exception e) {
             e.printStackTrace();
