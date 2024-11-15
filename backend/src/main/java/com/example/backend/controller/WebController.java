@@ -1,7 +1,9 @@
 package com.example.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,11 @@ import com.example.backend.model.Player;
 import com.example.backend.service.PlayerService;
 import com.example.backend.udp.UDPService;
 
-
 @RestController
 @RequestMapping("/api")
 public class WebController {
+
+    private final ConcurrentLinkedQueue<String> messages = new ConcurrentLinkedQueue<>();
 
     @Autowired 
     private PlayerService playerService; 
@@ -58,9 +61,15 @@ public class WebController {
         }
     }
 
+    public void addMessage(String message) {
+        messages.add(message);
+    }
+
     @GetMapping("/checkForUpdates")
     public List<String> checkForUpdates() {
-        return List.of("10:15", "12:07", "10:53");
+        List<String> updates = new ArrayList<>(messages);
+        messages.clear();
+        return updates;
     }
 
     @PostMapping("/sendEquipmentID")

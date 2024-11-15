@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.springframework.stereotype.Component;
 
+import com.example.backend.controller.WebController;
+
 import jakarta.annotation.PostConstruct;
 
 @Component
@@ -74,11 +76,11 @@ public class UDPService {
                 this.receiveSocket.receive(packet); // Receive the packet
 
                 String received = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-                /*
-                 * 
-                 *  WebController.functionName(recieved)
-                 * 
-                 */
+                
+                // add data into queue to be sent to frontend
+                WebController webController = new WebController();
+                webController.addMessage(received);
+
                 System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
             }
         } catch (Exception e) {
