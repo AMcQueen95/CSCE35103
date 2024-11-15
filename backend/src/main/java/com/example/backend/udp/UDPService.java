@@ -23,7 +23,8 @@ public class UDPService {
     public void start() {
         try {
             this.address = InetAddress.getByName("localhost");
-            this.receiveSocket = new DatagramSocket(); // Listening on port 7501
+
+            this.receiveSocket = new DatagramSocket(this.recievePort, this.address); // Listening on port 7501
             this.sendSocket = new DatagramSocket();
             // Start receiving packets in a new thread
             new Thread(this::receiveDatagram).start();
@@ -68,10 +69,10 @@ public class UDPService {
             byte[] receiveBuffer = new byte[this.bufferSize]; // Buffer to hold incoming datagrams
 
             while (true) {
-                DatagramPacket packet = new DatagramPacket(receiveBuffer, this.bufferSize, this.address, this.recievePort);
+                DatagramPacket packet = new DatagramPacket(receiveBuffer, this.bufferSize);
                 this.receiveSocket.receive(packet); // Receive the packet
 
-                String received = new String(packet.getData(), "UTF-8");
+                String received = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
                 /*
                  * 
                  *  WebController.functionName(recieved)
