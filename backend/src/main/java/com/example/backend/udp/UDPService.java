@@ -79,7 +79,7 @@ public class UDPService {
                  *  WebController.functionName(recieved)
                  * 
                  */
-                System.out.println("Received String: \"" + received + "\""); // Handle the received ID
+                System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
             }
         } catch (Exception e) {
             e.printStackTrace();
