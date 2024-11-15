@@ -60,7 +60,7 @@ public class WebController {
 
     @GetMapping("/checkForUpdates")
     public List<String> checkForUpdates() {
-        return List.of("10:15", "12:07", "10:53");
+        return List.of("10:15", "12:7", "10:53");
     }
 
     @PostMapping("/sendEquipmentID")
