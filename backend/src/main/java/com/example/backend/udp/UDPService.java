@@ -14,7 +14,7 @@ public class UDPService {
     private DatagramSocket sendSocket;
     private int bufferSize = 1024;
     private int recievePort = 7501;
-    private int sendPort = 7501;
+    private int sendPort = 7500;
     private InetAddress address;
 
     public UDPService() {
