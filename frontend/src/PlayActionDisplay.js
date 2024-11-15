@@ -107,6 +107,7 @@ function PlayActionDisplay({ players, resetGame }) {
         fetch('/api/checkForUpdates')
         .then(response => response.json())  // Parse JSON response
         .then(data => {
+          console.log(data);
           data.forEach(message => {
             console.log(message);
             handleGameEvent(message);
