@@ -108,6 +108,7 @@ function PlayActionDisplay({ players, resetGame }) {
         .then(response => response.json())  // Parse JSON response
         .then(data => {
           data.forEach(message => {
+            console.log(message);
             handleGameEvent(message);
           });
         })
@@ -115,7 +116,7 @@ function PlayActionDisplay({ players, resetGame }) {
           console.error("Error fetching updates:", error);
         });
       }
-    }, 1000); // Poll every 5 seconds
+    }, 1000); // Poll every 1 second
 
     // Cleanup the interval when the component unmounts
     return () => clearInterval(interval);
