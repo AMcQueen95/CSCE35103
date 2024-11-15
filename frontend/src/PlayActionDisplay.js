@@ -21,6 +21,7 @@ function PlayActionDisplay({ players, resetGame }) {
   const [teamScores, setTeamScores] = useState({ Red: 0, Green: 0 });
 
   const audioRef = useRef(null); // Reference to the audio object
+  const hasStarted = useRef(false);
 
   //Store all the tracks in an array to be able to randomly select one.
   const tracks = useMemo(
@@ -34,8 +35,12 @@ function PlayActionDisplay({ players, resetGame }) {
       setInitialCountdown((prevCountdown) => {
         if (prevCountdown <= 1) {
           clearInterval(timer);
-          setSecondaryCountdown(6 * 60);
-          sendStartSignal(); // Send start signal to backend
+          if(!hasStarted.current) {
+            setSecondaryCountdown(6 * 60);
+            sendStartSignal(); // Send start signal to backend
+            hasStarted.current = true;
+          }
+          
           return 0;
         }
         return prevCountdown - 1;
@@ -231,6 +236,7 @@ function PlayActionDisplay({ players, resetGame }) {
     setEvents([]);
     setPlayerScores({});
     setTeamScores({ Red: 0, Green: 0 });
+    hasStarted.current = false;
     // Call the resetGame function passed as a prop
     resetGame();
   };
