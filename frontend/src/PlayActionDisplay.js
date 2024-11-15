@@ -152,8 +152,6 @@ function PlayActionDisplay({ players, resetGame }) {
       playersByEquipmentId[player.equipmentID] = player;
     });
 
-    console.log(playersByEquipmentId[senderId].playerName + " shot " + playersByEquipmentId[targetId].playerName);
-
     if (baseHitCodes[targetId]) {
       // Base hit event
       const player = playersByEquipmentId[senderId];
