@@ -62,6 +62,7 @@ public class WebController {
     }
 
     public void addMessage(String message) {
+        System.out.println("Message Added to Queue: " + message);
         messages.add(message);
     }
 
