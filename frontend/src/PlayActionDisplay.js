@@ -112,9 +112,7 @@ function PlayActionDisplay({ players, resetGame }) {
           return response.json();
         })
         .then(data => {
-          console.log("Fetched data:", data); // Should log the array ["10:15", "12:07", "10:53"]
           data.forEach(message => {
-            console.log("Processing message:", message);
             handleGameEvent(message);
           });
         })
@@ -156,6 +154,8 @@ function PlayActionDisplay({ players, resetGame }) {
 
       const baseHit = baseHitCodes[targetId];
       const eventMessage = `${player.playerName} hit ${baseHit}`;
+      console.log(`${player.playerName} hit ${baseHit}`);
+
       setEvents((prevEvents) => [...prevEvents, eventMessage]);
 
       // Update player's score and team score
@@ -173,6 +173,8 @@ function PlayActionDisplay({ players, resetGame }) {
       if (!shooter || !target) return;
 
       const eventMessage = `${shooter.playerName} hit ${target.playerName}`;
+      console.log(`${shooter.playerName} hit ${target.playerName}`);
+    
       setEvents((prevEvents) => [...prevEvents, eventMessage]);
 
       // Determine if same team or opposing team
