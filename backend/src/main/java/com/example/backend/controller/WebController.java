@@ -35,9 +35,9 @@ public class WebController {
 
         // debugging
         if (playerExists) {
-            System.out.println("Player with ID " + id + "exists in the database!");
+            System.out.println("Player with ID " + id + " exists in the database!");
         } else {
-            System.out.println("Player with ID " + id + "does not exist in the database!");
+            System.out.println("Player with ID " + id + " does not exist in the database!");
         }
 
         return ResponseEntity.ok(!playerExists); // true if not in DB, false if exists
