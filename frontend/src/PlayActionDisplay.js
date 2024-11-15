@@ -149,7 +149,7 @@ function PlayActionDisplay({ players, resetGame }) {
 
     const playersByEquipmentId = {};
     players.forEach((player) => {
-      playersByEquipmentId[player.equipmentId] = player;
+      playersByEquipmentId[player.equipmentID] = player;
     });
 
     console.log(playersByEquipmentId[senderId].playerName + " shot " + playersByEquipmentId[targetId].playerName);
