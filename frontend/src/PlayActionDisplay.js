@@ -102,8 +102,9 @@ function PlayActionDisplay({ players, resetGame }) {
   useEffect(() => {
     // Start polling every 5 seconds
     const interval = setInterval(() => {
-      // Fetch the data from the backend
-      fetch('/api/checkForUpdates')
+      if(hasStarted.current) {
+        // Fetch the data from the backend
+        fetch('/api/checkForUpdates')
         .then(response => response.json())  // Parse JSON response
         .then(data => {
           data.forEach(message => {
@@ -113,6 +114,7 @@ function PlayActionDisplay({ players, resetGame }) {
         .catch(error => {
           console.error("Error fetching updates:", error);
         });
+      }
     }, 1000); // Poll every 5 seconds
 
     // Cleanup the interval when the component unmounts
