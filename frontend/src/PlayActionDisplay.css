@@ -94,12 +94,20 @@
     border-radius: 10px;
     background-color: #222;
     text-align: center;
+    align-items: center;
     color: white;
 }
 
-.base-hit {
+.base-hit.red {
     padding: 2px;
-    border: 2px solid white;
+    border: 2px solid var(--green);
+    border-radius: 1px;
+}
+
+.base-hit.green {
+    padding: 2px;
+    border: 2px solid var(--red);
+    border-radius: 1px;
 }
 
 .countdown-timer {

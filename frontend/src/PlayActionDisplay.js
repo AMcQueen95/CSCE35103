@@ -259,6 +259,7 @@ function PlayActionDisplay({ players, resetGame }) {
     setEvents([]);
     setPlayerScores({});
     setTeamScores({ Red: 0, Green: 0 });
+    setPlayersWhoHitBase([]);
     hasStarted.current = false;
     // Call the resetGame function passed as a prop
     resetGame();
@@ -273,7 +274,7 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit'>B</span>}
+              {/*.includes(player.playerID) && */ <span className='base-hit red'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
@@ -284,7 +285,7 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="green">Green Team - {teamScores.Green} points</h2>
           {greenTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit'>B</span>}
+              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit green'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
