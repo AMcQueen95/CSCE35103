@@ -14,6 +14,24 @@ function PlayerSlot({ equipmentID, playerID, playerName }) {
   );
 }
 
+function PlayersHeader() {
+  return (
+    <div>
+      <div className="Header Small">
+        <p className='EquipmentID Small'>E. ID</p>
+        <p className="PlayerID Small">P. ID</p>
+        <p className="PlayerName Small">Name</p>
+      </div>
+      <div className="Header Large">
+        <p className="EquipmentID Large">Equipment ID</p>
+        <p className="PlayerID Large">Player ID</p>
+        <p className="PlayerName Large">Player Name</p>
+      </div>
+    </div>
+    
+  );
+}
+
 // This is the first Player Popup, it prompts you for player ID and then checks the database for that ID
 // If the ID cannot be found another popup will appear asking for new player name, but if player ID is found
 // the equipment ID popup will appear.
@@ -32,6 +50,15 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
   const handleEquipmentIDChange = (event) => {
     setEquipmentID(event.target.value);
   };
+
+  const handleCancel = () => {
+    setPopupState(0);
+    setPlayerID(0);
+    setPlayerName('');
+    setEquipmentID(0);
+
+    togglePopup();
+  }
 
   const handleSubmit = async () => {
     if (popupState === 0) {
@@ -69,31 +96,36 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
   };
 
   return (
-    <div className="EntryPopupBox">
-      {/* This is state = 0, this is the part that requests your ID*/}
-      <div className={"PlayerIDInput state" + popupState}>
-        <label>
-          Player ID: <input value={playerID} onChange={handlePlayerIDChange} type="number" />
-        </label>
-      </div>
+    <div className="EntryPopupBoxContainer">
+      <div className="EntryPopupBox">
+        {/* This is state = 0, this is the part that requests your ID*/}
+        <div className={"PlayerIDInput state" + popupState}>
+          <label>
+            Player ID: <input value={playerID} onChange={handlePlayerIDChange} type="number" />
+          </label>
+        </div>
 
-      {/* This is state = 1, this is the part that if your ID is not in the database, it will request a player name for your new player */}
-      <div className={"PlayerNameInput state" + popupState}>
-        <p>Player ID: {playerID}</p>
-        <label>
-          Player Name: <input value={playerName} onChange={handlePlayerNameChange} type="text" />
-        </label>
-      </div>
+        {/* This is state = 1, this is the part that if your ID is not in the database, it will request a player name for your new player */}
+        <div className={"PlayerNameInput state" + popupState}>
+          <p>Player ID: {playerID}</p>
+          <label>
+            Player Name: <input value={playerName} onChange={handlePlayerNameChange} type="text" />
+          </label>
+        </div>
 
-      {/* This is state = 2, this is the final state of the popup, It displays the player name and ID and requests your equipment ID */}
-      <div className={"EquipmentIDInput state" + popupState}>
-        <p>Player ID: {playerID}</p>
-        <p>Player Name: {playerName}</p>
-        <label>
-          Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
-        </label>
+        {/* This is state = 2, this is the final state of the popup, It displays the player name and ID and requests your equipment ID */}
+        <div className={"EquipmentIDInput state" + popupState}>
+          <p>Player ID: {playerID}</p>
+          <p>Player Name: {playerName}</p>
+          <label>
+            Equipment ID: <input value={equipmentID} onChange={handleEquipmentIDChange} type="number" />
+          </label>
+        </div>
+        <div className="Popup Buttons">
+          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleCancel}>Cancel</button>
+        </div>
       </div>
-      <button onClick={handleSubmit}>Submit Player</button>
     </div>
   );
 }
@@ -168,7 +200,7 @@ function EntryScreen({players, setPlayers, startGame}) {
   };
 
   return (
-    <div>
+    <div className="Background">
       <div id="_PlayerEntryPopup" className={entryClass.name}>
         <PlayerIDPopup
           togglePopup={togglePopup}
@@ -179,11 +211,7 @@ function EntryScreen({players, setPlayers, startGame}) {
       <div className="EntrySlots">
         <div className="Red Team">
           <p>Red Team</p>
-          <div className="Header">
-            <p className="EquipmentID">Equipment ID</p>
-            <p className="PlayerID">Player ID</p>
-            <p className="PlayerName">Player Name</p>
-          </div>
+          <PlayersHeader></PlayersHeader>
           {/* Right here is where the player list gets populated */}
           {players
             .filter(
@@ -201,11 +229,7 @@ function EntryScreen({players, setPlayers, startGame}) {
         </div>
         <div className="Green Team">
           <p>Green Team</p>
-          <div className="Header">
-            <p className="EquipmentID">Equipment ID</p>
-            <p className="PlayerID">Player ID</p>
-            <p className="PlayerName">Player Name</p>
-          </div>
+          <PlayersHeader></PlayersHeader>
           {players
             .filter(
               (player) =>

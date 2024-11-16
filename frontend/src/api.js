@@ -1,5 +1,25 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
 
+export const sendCode = async (code) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/sendCode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(code)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send Code');
+        }
+
+        console.log("Sent " + code + " to the backend"); // Return added player & success code
+    } catch (error) {
+        console.error('Error sending Code to backend: ', error);  
+    }
+}
+
 export const sendEquipmentID = async (equipmentID) => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/sendEquipmentID`, {

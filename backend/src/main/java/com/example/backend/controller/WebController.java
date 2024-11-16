@@ -1,8 +1,12 @@
 package com.example.backend.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +21,17 @@ import com.example.backend.service.PlayerService;
 import com.example.backend.udp.UDPService;
 
 
+
 @RestController
 @RequestMapping("/api")
 public class WebController {
 
+    private final ConcurrentLinkedQueue<String> messages = new ConcurrentLinkedQueue<>();
+
     @Autowired 
     private PlayerService playerService; 
 
+    @Lazy
     @Autowired
     private UDPService udpService;
 
@@ -34,9 +42,9 @@ public class WebController {
 
         // debugging
         if (playerExists) {
-            System.out.println("Player with ID " + id + "exists in the database!");
+            System.out.println("Player with ID " + id + " exists in the database!");
         } else {
-            System.out.println("Player with ID " + id + "does not exist in the database!");
+            System.out.println("Player with ID " + id + " does not exist in the database!");
         }
 
         return ResponseEntity.ok(!playerExists); // true if not in DB, false if exists
@@ -57,11 +65,24 @@ public class WebController {
         }
     }
 
+    public void addMessage(String message) {
+        System.out.println("Message Added to Queue: " + message);
+        messages.add(message);
+    }
+
+    @GetMapping("/checkForUpdates")
+    public List<String> checkForUpdates() {
+
+        List<String> updates = new ArrayList<>(messages);
+        messages.clear();
+        return updates;
+    }
+
     @PostMapping("/sendEquipmentID")
     public ResponseEntity<Void> sendEquipmentID(@RequestBody Player player) {
         System.out.println("Sending equipment ID: " + player.getEquipmentId());
         try {
-            udpService.sendDatagram("localhost", 7500, player.getEquipmentId());
+            udpService.sendDatagram(String.valueOf(player.getEquipmentId()));
             return ResponseEntity.ok().build(); // Return HTTP 200 OK
         } catch (Exception e) {
             // Log the exception if necessary
@@ -69,6 +90,19 @@ public class WebController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return HTTP 500 if an error occurs
         }
     }
+
+    @PostMapping("/sendCode")
+    public ResponseEntity<Void> sendCode(@RequestBody Integer code) {
+        try {
+            udpService.sendDatagram(String.valueOf(code));
+            return ResponseEntity.ok().build(); // Return HTTP 200 OK
+        } catch (Exception e) {
+            // Log the exception if necessary
+            System.err.println("Error sending Integer Code: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return HTTP 500 if an error occurs
+        }
+    }
+
 
     @PostMapping("/addPlayer")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {

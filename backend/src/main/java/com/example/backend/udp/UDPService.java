@@ -1,25 +1,38 @@
 package com.example.backend.udp;
-
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.example.backend.controller.WebController;
+
 import jakarta.annotation.PostConstruct;
+
 
 @Component
 public class UDPService {
 
-    private DatagramSocket socket;
+    private final WebController webController;
+    private DatagramSocket receiveSocket;
+    private DatagramSocket sendSocket;
+    private int bufferSize = 1024;
+    private int recievePort = 7501;
+    private int sendPort = 7500;
+    private InetAddress address;
 
-    public UDPService() {
+    public UDPService(@Lazy WebController webController) {
+        this.webController = webController;
     }
 
     public void start() {
         try {
-            socket = new DatagramSocket(7501); // Listening on port 7500
+            this.address = InetAddress.getByName("localhost");
+
+            this.receiveSocket = new DatagramSocket(this.recievePort, this.address); // Listening on port 7501
+            this.sendSocket = new DatagramSocket();
             // Start receiving packets in a new thread
             new Thread(this::receiveDatagram).start();
         } catch (Exception e) {
@@ -32,19 +45,21 @@ public class UDPService {
         start();
     }
 
-    // Send a datagram with the player ID to a specific host and port
-    public void sendDatagram(String host, int port, int equipmentId) {
-        if (socket == null) {
+    // Send a datagram with the Code to a specific host and port
+    public void sendDatagram(String code) {
+        if (this.sendSocket == null) {
             System.err.println("Socket is not initialized. Cannot send datagram.");
             return;
         }
         
         try {
-            byte[] sendBuffer = convertIntToByteArray(equipmentId);
-            InetAddress address = InetAddress.getByName(host);
-            DatagramPacket packet = new DatagramPacket(sendBuffer, sendBuffer.length, address, port);
-            socket.send(packet); // Send the datagram
-            System.out.println("UDP packet sent with Equipment ID: " + equipmentId + " to " + host + ":" + port);
+            byte[] sendBuffer = code.getBytes(StandardCharsets.UTF_8); //Turns the code into string
+
+            DatagramPacket packet = new DatagramPacket(sendBuffer, sendBuffer.length, this.address, this.sendPort); //Creates packet w/information
+            this.sendSocket.send(packet); // Send the datagram
+
+            System.out.println("UDP packet sent with Code: " + code + " over \"localhost\" and port: " + this.sendPort);
+
         } catch (Exception e) {
             e.printStackTrace(); // Handle exceptions appropriately
         }
@@ -52,32 +67,27 @@ public class UDPService {
 
     // Receive datagrams from the socket
     private void receiveDatagram() {
-        if (socket == null) {
+        if (this.receiveSocket == null) {
             System.err.println("Socket is not initialized. Cannot send datagram.");
             return;
         }
 
         try {
-            byte[] receiveBuffer = new byte[4]; // Buffer to hold incoming datagrams
-            while (true) {
-                DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-                socket.receive(packet); // Receive the packet
+            byte[] receiveBuffer = new byte[this.bufferSize]; // Buffer to hold incoming datagrams
 
-                int playerId = convertByteArrayToInt(receiveBuffer);
-                System.out.println("Received player ID: " + playerId); // Handle the received ID
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(receiveBuffer, this.bufferSize);
+                this.receiveSocket.receive(packet); // Receive the packet
+
+                String received = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+                
+                // add data into queue to be sent to frontend
+                webController.addMessage(received);
+
+                System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // Decode the byte array to an int
-    public static int convertByteArrayToInt(byte[] bytes) {
-        return ByteBuffer.wrap(bytes).getInt();
-    }
-
-    // Encode the int to a byte array
-    public static byte[] convertIntToByteArray(int code) {
-        return ByteBuffer.allocate(4).putInt(code).array();
     }
 }

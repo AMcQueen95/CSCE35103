@@ -1,8 +1,15 @@
+:root {
+    --green: #7fff7f;
+    --red: #ff7f7f;
+    --dark-grey: #333;
+}
+
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
 }
-
 
 /* Player Slot CSS */
 
@@ -12,25 +19,45 @@
 }
 
 .PlayerID, .PlayerName, .EquipmentID {
-    margin: 1px;
-    background-color: #ffffff99;
-    border: 2px solid black;
-    padding: 2px;
+    margin-left: 1%;
+    margin-right: 1%;
+    color: white;
+    padding: 2%;
     border-radius: 4px;
+}
+
+.EquipmentID, .PlayerID {
+    width: 25%;
     text-align: center;
 }
 
-.EquipmentID {
-    width: 100px;
-}
-
-.PlayerID {
-    width: 100px;
-}
-
 .PlayerName {
-    width: 300px;
+    width: 50%;
     text-align: left;
+}
+
+.Header.Small {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 1400px) {
+    .Header.Small {
+        position: static;
+        width: auto;
+        height: auto;
+    }
+
+    .Header.Large {
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
 }
 
 /* Player Entry Popup CSS */
@@ -48,17 +75,25 @@
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
 }
 
+.EntryPopupBoxContainer {
+    display: flex;
+    margin: auto;
+    padding-bottom: 20%;
+    align-items: center;
+    justify-content: center;
+}
+
 .EntryPopupBox {
-    margin-top: 150px;
+    /* margin: auto; */
     width: 400px;
-    height: 120px;
+    height: auto;
+    padding-top: 10px;
     background: white;
     border-radius: 5px;
     display: flex;
@@ -69,9 +104,16 @@
     box-shadow: 2px 2px 2px 0px black;
 }
 
-.EntryPopupBox > button {
-    margin-top: 10px;
-    width: 200px;
+.EntryPopupBox > .Buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: row;
+}
+
+.EntryPopupBox > .Buttons > button {
+    margin: 10px;
+    width: 30%;
     height: 30px;
     font-size: 18px;
     font-weight: 700;
@@ -125,7 +167,6 @@
     flex-direction: column;
 }
 
-
 .EntryPopupBox > input {
     width: 350px;
 }
@@ -133,12 +174,15 @@
 /* Entry Screen CSS */
 
 .Team {
+    width: 45%;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     padding: 8px;
     justify-content: center;
-    border-radius: 6px;
+    border-radius: 15px;
     box-shadow: 2px 2px 7px 0px black;
+    transition: height 1s linear 1s;
     /* text-align: center; */
 }
 
@@ -158,18 +202,27 @@
 }
 
 .Red.Team {
-    background-color: red;
+    border: 10px solid var(--red);
+    /* border-radius: 15px; */
+}
+.Red.Team > p {
+    color: var(--red);
 }
 
 .Green.Team {
-    background-color: green;
+    border: 10px solid var(--green);
+    /* border-radius: 15px; */
+}
+.Green.Team > p {
+    color: var(--green);
 }
 
 .EntrySlots {
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .ControlButtons {
