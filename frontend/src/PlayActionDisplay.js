@@ -22,6 +22,7 @@ function PlayActionDisplay({ players, resetGame }) {
   const [events, setEvents] = useState([]);
   const [playerScores, setPlayerScores] = useState({});
   const [teamScores, setTeamScores] = useState({ Red: 0, Green: 0 });
+  const [playersWhoHitBase, setPlayersWhoHitBase] = useState([]);
 
   const audioRef = useRef(null); // Reference to the audio object
   const hasStarted = useRef(false);
@@ -169,6 +170,12 @@ function PlayActionDisplay({ players, resetGame }) {
         (baseHit === 'Red Base' && player.playerTeam === 'Green')
       ) {
         updateScores(player.playerID, 100);
+        setPlayersWhoHitBase((prev) => {
+          if(!prev.includes(player.playerID)) {
+            return [...prev, player.playerID];
+          }
+          return prev;
+        });
       }
     } else {
       // Player hit event
@@ -266,7 +273,7 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              <span className="base-hit">B</span>
+              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
@@ -277,10 +284,9 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="green">Green Team - {teamScores.Green} points</h2>
           {greenTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              <p className="player-name">
-                {player.playerName}{' '}
-                <span className="player-score">Score: {player.score}</span>
-              </p>
+              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit'>B</span>}
+              <p className="player-name">{player.playerName}</p>
+              <span className="player-score">Score: {player.score}</span>
             </div>
           ))}
         </div>
