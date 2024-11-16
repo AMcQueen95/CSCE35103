@@ -4,13 +4,18 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.example.backend.controller.WebController;
+
 import jakarta.annotation.PostConstruct;
+
 
 @Component
 public class UDPService {
 
+    private final WebController webController;
     private DatagramSocket receiveSocket;
     private DatagramSocket sendSocket;
     private int bufferSize = 1024;
@@ -18,7 +23,8 @@ public class UDPService {
     private int sendPort = 7500;
     private InetAddress address;
 
-    public UDPService() {
+    public UDPService(@Lazy WebController webController) {
+        this.webController = webController;
     }
 
     public void start() {
@@ -74,11 +80,10 @@ public class UDPService {
                 this.receiveSocket.receive(packet); // Receive the packet
 
                 String received = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-                /*
-                 * 
-                 *  WebController.functionName(recieved)
-                 * 
-                 */
+                
+                // add data into queue to be sent to frontend
+                webController.addMessage(received);
+
                 System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
             }
         } catch (Exception e) {
