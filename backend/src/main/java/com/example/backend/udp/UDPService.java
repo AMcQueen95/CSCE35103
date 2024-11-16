@@ -13,6 +13,7 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class UDPService {
 
+    private final WebController webController;
     private DatagramSocket receiveSocket;
     private DatagramSocket sendSocket;
     private int bufferSize = 1024;
@@ -20,7 +21,8 @@ public class UDPService {
     private int sendPort = 7500;
     private InetAddress address;
 
-    public UDPService() {
+    public UDPService(WebController webController) {
+        this.webController = new WebController();
     }
 
     public void start() {
@@ -78,7 +80,6 @@ public class UDPService {
                 String received = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
                 
                 // add data into queue to be sent to frontend
-                WebController webController = new WebController();
                 webController.addMessage(received);
 
                 System.out.println("Received String: \"" + received + "\" and sent to the frontend"); // Handle the received ID
