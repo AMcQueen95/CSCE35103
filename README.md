@@ -7,6 +7,7 @@ Software Engineering lazer tag project
 ### Project Setup
 1. For initial project setup open new terminal, navigate to the CSCE35103 directory and run the following command
 ```./build.sh```
+Wait for it to complete before moving on to next steps.
 
 ### Running Application
 1. Open new terminal, navigate to the CSCE35103 directory and run following command
