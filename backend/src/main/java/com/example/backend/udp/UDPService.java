@@ -22,7 +22,7 @@ public class UDPService {
     private InetAddress address;
 
     public UDPService(WebController webController) {
-        this.webController = new WebController();
+        this.webController = webController;
     }
 
     public void start() {
