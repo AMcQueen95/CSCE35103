@@ -16,7 +16,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
 function PlayActionDisplay({ players, resetGame }) {
-  const [initialCountdown, setInitialCountdown] = useState(5);
+  const [initialCountdown, setInitialCountdown] = useState(30);
   const [secondaryCountdown, setSecondaryCountdown] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [events, setEvents] = useState([]);
@@ -40,7 +40,7 @@ function PlayActionDisplay({ players, resetGame }) {
         if (prevCountdown <= 1) {
           clearInterval(timer);
           if(!hasStarted.current) {
-            setSecondaryCountdown(10);
+            setSecondaryCountdown(6 * 60);
             sendStartSignal(); // Send start signal to backend
             hasStarted.current = true;
           }
@@ -304,26 +304,34 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
           {redTeamPlayers
             .sort((a, b) => b.score - a.score)
-            .map((player) => (
-            <div key={player.playerID} className="player-slot">
+            .map((player, index) => {
+              const isTopScore = index === 0;
+
+            return(
+            <div key={player.playerID} className={`player-slot ${isTopScore ? 'top-score-red' : ''}`}>
               {playersWhoHitBase.includes(player.playerID) && <span className='base-hit red'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
-          ))}
+            )}
+          )}
         </div>
 
         <div className="team-window">
           <h2 className="green">Green Team - {teamScores.Green} points</h2>
           {greenTeamPlayers
             .sort((a, b) => b.score - a.score)
-            .map((player) => (
-            <div key={player.playerID} className="player-slot">
+            .map((player, index) => {
+              const isTopScore = index === 0;
+
+            return(
+            <div key={player.playerID} className={`player-slot ${isTopScore ? 'top-score-green' : ''}`}>
               {playersWhoHitBase.includes(player.playerID) && <span className='base-hit green'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
-          ))}
+            )}
+          )}
         </div>
       </div>
 

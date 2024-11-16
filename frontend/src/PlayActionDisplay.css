@@ -85,6 +85,40 @@
     color: var(--green);
 }
 
+@keyframes flashBorderRed {
+    0% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--red);  /* Change to your preferred color */
+    }
+    100% {
+        border-color: transparent;
+    }
+}
+
+@keyframes flashBorderGreen {
+    0% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--green);  /* Change to your preferred color */
+    }
+    100% {
+        border-color: transparent;
+    }
+}
+
+.top-score-red {
+    animation: flashBorderRed 1s infinite; /* Flash effect, 1 second duration, infinite loop */
+    border-width: 2px; /* You can adjust this to your preferred border thickness */
+}
+
+.top-score-green {
+    animation: flashBorderGreen 1s infinite; /* Flash effect, 1 second duration, infinite loop */
+    border-width: 2px; /* You can adjust this to your preferred border thickness */
+}
+
 .player-slot {
     display: flex;
     flex-direction: row;
@@ -92,6 +126,7 @@
     padding: 10px;
     margin: 10px 0;
     border-radius: 10px;
+    border: 2px solid transparent; 
     background-color: #222;
     text-align: center;
     align-items: center;
