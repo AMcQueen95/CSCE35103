@@ -4,11 +4,13 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.example.backend.controller.WebController;
 
 import jakarta.annotation.PostConstruct;
+
 
 @Component
 public class UDPService {
@@ -21,7 +23,7 @@ public class UDPService {
     private int sendPort = 7500;
     private InetAddress address;
 
-    public UDPService(WebController webController) {
+    public UDPService(@Lazy WebController webController) {
         this.webController = webController;
     }
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import com.example.backend.model.Player;
 import com.example.backend.service.PlayerService;
 import com.example.backend.udp.UDPService;
 
+
+
 @RestController
 @RequestMapping("/api")
 public class WebController {
@@ -28,6 +31,7 @@ public class WebController {
     @Autowired 
     private PlayerService playerService; 
 
+    @Lazy
     @Autowired
     private UDPService udpService;
 
