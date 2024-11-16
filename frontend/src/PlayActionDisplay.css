@@ -100,14 +100,16 @@
 
 .base-hit.red {
     padding: 2px;
+    margin-left: 3px;
     border: 2px solid var(--green);
-    border-radius: 1px;
+    border-radius: 3px;
 }
 
 .base-hit.green {
     padding: 2px;
+    margin-left: 3px;
     border: 2px solid var(--red);
-    border-radius: 1px;
+    border-radius: 3px;
 }
 
 .countdown-timer {
@@ -233,6 +235,14 @@
   .event-item {
     margin: 5px 0;
     font-size: 18px;
+  }
+
+  .event-item.Green {
+    color: var(--green);
+  }
+
+  .event-item.Red {
+    color: var(--red);
   }
   
   .secondary-timer {

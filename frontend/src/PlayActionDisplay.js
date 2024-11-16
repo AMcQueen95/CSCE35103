@@ -164,6 +164,17 @@ function PlayActionDisplay({ players, resetGame }) {
 
       setEvents((prevEvents) => [...prevEvents, eventMessage]);
 
+      setEvents((prevEvents) => {
+        const updatedEvents = [
+          ...prevEvents,
+          {
+            message: eventMessage,
+            team: player.playerTeam,
+          },
+        ];
+        return updatedEvents;
+      });
+
       // Update player's score and team score
       if (
         (baseHit === 'Green Base' && player.playerTeam === 'Red') ||
@@ -187,7 +198,16 @@ function PlayActionDisplay({ players, resetGame }) {
       const eventMessage = `${shooter.playerName} hit ${target.playerName}`;
       console.log(`${shooter.playerName} hit ${target.playerName}`);
     
-      setEvents((prevEvents) => [...prevEvents, eventMessage]);
+      setEvents((prevEvents) => {
+        const updatedEvents = [
+          ...prevEvents,
+          {
+            message: eventMessage,
+            team: shooter.playerTeam,
+          },
+        ];
+        return updatedEvents;
+      });
 
       // Determine if same team or opposing team
       if (shooter.playerTeam === target.playerTeam) {
@@ -274,7 +294,7 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
           {redTeamPlayers.map((player) => (
             <div key={player.playerID} className="player-slot">
-              {/*.includes(player.playerID) && */ <span className='base-hit red'>B</span>}
+              {playersWhoHitBase.includes(player.playerID) && <span className='base-hit red'>B</span>}
               <p className="player-name">{player.playerName}</p>
               <span className="player-score">Score: {player.score}</span>
             </div>
@@ -306,8 +326,8 @@ function PlayActionDisplay({ players, resetGame }) {
           <h2>Play Actions</h2>
           <div className="event-list">
             {events.map((event, index) => (
-              <p key={index} className="event-item">
-                {event}
+              <p key={index} className={"event-item " + event.team}>
+                {event.message}
               </p>
             ))}
           </div>

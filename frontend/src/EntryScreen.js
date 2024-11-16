@@ -51,6 +51,15 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
     setEquipmentID(event.target.value);
   };
 
+  const handleCancel = () => {
+    setPopupState(0);
+    setPlayerID(0);
+    setPlayerName('');
+    setEquipmentID(0);
+
+    togglePopup();
+  }
+
   const handleSubmit = async () => {
     if (popupState === 0) {
       const doesNotExist = await playerDoesNotExist(playerID);
@@ -114,7 +123,7 @@ function PlayerIDPopup({ togglePopup, addPlayer, playerTeam }) {
         </div>
         <div className="Popup Buttons">
           <button onClick={handleSubmit}>Submit</button>
-          <button>Cancel</button>
+          <button onClick={handleCancel}>Cancel</button>
         </div>
       </div>
     </div>
