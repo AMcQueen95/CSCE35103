@@ -16,7 +16,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
 function PlayActionDisplay({ players, resetGame }) {
-  const [initialCountdown, setInitialCountdown] = useState(30);
+  const [initialCountdown, setInitialCountdown] = useState(5);
   const [secondaryCountdown, setSecondaryCountdown] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [events, setEvents] = useState([]);
@@ -40,7 +40,7 @@ function PlayActionDisplay({ players, resetGame }) {
         if (prevCountdown <= 1) {
           clearInterval(timer);
           if(!hasStarted.current) {
-            setSecondaryCountdown(6 * 60);
+            setSecondaryCountdown(10);
             sendStartSignal(); // Send start signal to backend
             hasStarted.current = true;
           }
@@ -68,7 +68,7 @@ function PlayActionDisplay({ players, resetGame }) {
   useEffect(() => {
     if (secondaryCountdown === null) return;
     if (secondaryCountdown <= 0) {
-      // Game over
+      handleGameEnd();
       return;
     }
 
@@ -101,6 +101,14 @@ function PlayActionDisplay({ players, resetGame }) {
     console.log("Sending Start Code");
     sendCode(202);
   };
+
+  const handleGameEnd = async () => {
+    for(let i = 0; i < 3; i++) {
+      hasStarted.current = false;
+      console.log("sending end code");
+      sendCode(221);
+    }
+  }
 
   //Polling the backend every 1 second for events.
   useEffect(() => {
@@ -140,8 +148,6 @@ function PlayActionDisplay({ players, resetGame }) {
 
     const [senderId, targetId] = message.split(':');
 
-    sendCode(targetId); //Transmit out the shot player to the traffic generator.
-
     // Base hit codes
     const baseHitCodes = {
       '43': 'Green Base',
@@ -161,6 +167,8 @@ function PlayActionDisplay({ players, resetGame }) {
       const baseHit = baseHitCodes[targetId];
       const eventMessage = `${player.playerName} hit ${baseHit}`;
       console.log(`${player.playerName} hit ${baseHit}`);
+
+      sendCode(targetId); //Transmit out the shot player to the traffic generator.
 
       setEvents((prevEvents) => [...prevEvents, eventMessage]);
 
@@ -213,9 +221,11 @@ function PlayActionDisplay({ players, resetGame }) {
       if (shooter.playerTeam === target.playerTeam) {
         // Same team hit, deduct points
         updateScores(shooter.playerID, -10);
+        sendCode(senderId); //Transmit out the shot player to the traffic generator.
       } else {
         // Opposing team hit, add points
         updateScores(shooter.playerID, 10);
+        sendCode(targetId); //Transmit out the shot player to the traffic generator.
       }
     }
   };
@@ -292,7 +302,9 @@ function PlayActionDisplay({ players, resetGame }) {
 
         <div className="team-window">
           <h2 className="red">Red Team - {teamScores.Red} points</h2>
-          {redTeamPlayers.map((player) => (
+          {redTeamPlayers
+            .sort((a, b) => b.score - a.score)
+            .map((player) => (
             <div key={player.playerID} className="player-slot">
               {playersWhoHitBase.includes(player.playerID) && <span className='base-hit red'>B</span>}
               <p className="player-name">{player.playerName}</p>
@@ -303,7 +315,9 @@ function PlayActionDisplay({ players, resetGame }) {
 
         <div className="team-window">
           <h2 className="green">Green Team - {teamScores.Green} points</h2>
-          {greenTeamPlayers.map((player) => (
+          {greenTeamPlayers
+            .sort((a, b) => b.score - a.score)
+            .map((player) => (
             <div key={player.playerID} className="player-slot">
               {playersWhoHitBase.includes(player.playerID) && <span className='base-hit green'>B</span>}
               <p className="player-name">{player.playerName}</p>
